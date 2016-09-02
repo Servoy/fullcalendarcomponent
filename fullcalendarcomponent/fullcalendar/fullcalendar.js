@@ -229,8 +229,8 @@ angular.module('svyFullcalendar', ['servoy']).directive('svyFullcalendar', funct
 
 				/* Calendar Callbacks */
 				select = function(start, end, jsEvent, view, resource) {
-					console.log(view);
-					console.log(resource);
+					//console.log(view);
+					//console.log(resource);
 					if ($log.debugEnabled) $log.debug(view);
 
 					//					console.log(start)
@@ -284,10 +284,10 @@ angular.module('svyFullcalendar', ['servoy']).directive('svyFullcalendar', funct
 				}
 
 				eventDrop = function(event, delta, revertFunc, jsEvent, ui, view) {
-					console.log(event)
-					console.log(delta)
-					console.log(ui)
-					console.log(view)
+					//console.log(event)
+					//console.log(delta)
+					//console.log(ui)
+					//console.log(view)
 
 					if ($scope.handlers.onEventDropMethodID) {
 						var retValue = $scope.handlers.onEventDropMethodID(stringifyEvent(event), delta, jsEvent, stringifyView(view))
@@ -359,8 +359,8 @@ angular.module('svyFullcalendar', ['servoy']).directive('svyFullcalendar', funct
 					$scope.model.view.defaultDate = parseMoment(date);
 					$scope.svyServoyapi.apply("view");
 
-					console.log("view rendered on:");
-					console.log(view);
+					//console.log("view rendered on:");
+					//console.log(view);
 
 					// fire onViewRenderMethodID
 					if ($scope.handlers.onViewRenderMethodID) {
@@ -529,7 +529,7 @@ angular.module('svyFullcalendar', ['servoy']).directive('svyFullcalendar', funct
 
 				// TODO test
 				$scope.api.changeView = function(viewName) {
-					console.log($scope.model.calendarOptions);
+					// console.log($scope.model.calendarOptions);
 					calendar.fullCalendar('changeView', viewName);
 				}
 
@@ -613,8 +613,8 @@ angular.module('svyFullcalendar', ['servoy']).directive('svyFullcalendar', funct
 
 				// TODO the component API should not modify the dataprovider
 				$scope.api.renderEvent = function(event, stick) {
-					console.log("API: render event");
-					console.log(event);
+					//console.log("API: render event");
+					//console.log(event);
 					
 					var eventSource;
 					if (event.source) {	// find eventSource by id
@@ -893,7 +893,7 @@ angular.module('svyFullcalendar', ['servoy']).directive('svyFullcalendar', funct
 
 				$scope.$watch("model.calendarOptions.eventSources.length", function(newValue, oldValue) {
 						// TODO a possible solution would be to collect options and resources in a single object from a Server side API.
-						console.log("eventSources is changed " + oldValue + " -> " + newValue)
+						// console.log("eventSources is changed " + oldValue + " -> " + newValue)
 						// console.log("watch eventSources hasToDraw " + $scope.model.hasToDraw + " -> " + false)
 
 						// checking the length is necessary to understand if eventSource has been added
@@ -911,7 +911,7 @@ angular.module('svyFullcalendar', ['servoy']).directive('svyFullcalendar', funct
 				
 				$scope.$watch("model.calendarOptions.resources.length", function(newValue, oldValue) {
 					// TODO a possible solution would be to collect options and resources in a single object from a Server side API.
-					console.log("resource is changed" + oldValue + " -> " + newValue)
+					// console.log("resource is changed" + oldValue + " -> " + newValue)
 
 					// checking the length is necessary to understand if resource has been added
 					if (!$scope.model.hasToDraw && (newValue - oldValue === 1 || (newValue == 1 && oldValue === undefined))) { // if hasToDraw is true if fullCalendar constructor has been called
