@@ -1,6 +1,7 @@
 Manifest-Version: 1.0.0
 Bundle-SymbolicName: fullcalendarcomponent
 Bundle-Name: Fullcalendar Component
+Bundle-Version: 1.0.0
 Package-Type: Web-Component
 
 Name: fullcalendar/fullcalendar.spec
