@@ -1,0 +1,11 @@
+allowCreationRelatedRecords:true,
+deleteRelatedRecords:true,
+foreignDataSource:"db:/fullcalendar/event_resources",
+items:[
+{foreignColumnName:"resource_id",primaryDataProviderID:"resource_id",typeid:23,uuid:"AFF2157D-516D-4868-B35F-3DFB41A2F2D3"}
+],
+joinType:1,
+name:"resources_to_event_resources",
+primaryDataSource:"db:/fullcalendar/resources",
+typeid:22,
+uuid:"0FB9E136-DE4F-405A-B5F0-F9A8ABB943CA"

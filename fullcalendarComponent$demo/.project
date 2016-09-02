@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>fullcalendarComponent$demo</name>
+	<comment></comment>
+	<projects>
+		<project>fullcalendar_resources</project>
+		<project>fullcalendar_localhost_resources</project>
+		<project>mod_dialog</project>
+		<project>svyFullCalendar$model</project>
+		<project>svyUtils</project>
+		<project>fullcalendarcomponent</project>
+	</projects>
+	<buildSpec>
+		<buildCommand>
+			<name>org.eclipse.dltk.core.scriptbuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+		<buildCommand>
+			<name>com.servoy.eclipse.core.servoyBuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+	</buildSpec>
+	<natures>
+		<nature>com.servoy.eclipse.core.ServoyProject</nature>
+		<nature>org.eclipse.dltk.javascript.core.nature</nature>
+	</natures>
+</projectDescription>

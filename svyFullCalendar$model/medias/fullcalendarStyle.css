@@ -1,0 +1,134 @@
+/* general */
+:focus,
+a:focus {
+	outline: none;
+}
+
+.no-left-border {
+	border-left: 0px
+}
+
+.no-border .ui-grid {
+    border: 0px solid #d4d4d4;
+}
+
+/* calendar style */
+.fc-dateselector .fc-basic-view .fc-body .fc-row {
+	min-height: 1em;
+}
+
+/* grid rows */
+.ui-grid-row-selected div.ui-grid-cell {
+    background-color: transparent !important;
+}
+.ui-grid-row:nth-child(odd) .ui-grid-cell {
+    background-color: transparent !important;
+}
+.ui-grid-row:nth-child(even) .ui-grid-cell {
+    background-color: transparent !important;
+}
+
+/* servoy fields in table */
+.ui-grid-cell .svy-field, .ui-grid-cell .svy-calendar, .ui-grid-cell .svy-typeahead {
+	border: 0px;
+    box-shadow: none;
+    padding-left: 3px;
+}
+
+/* calendar field in table */
+.ui-grid-cell .date {
+	padding-right: 3px;
+}
+
+.ui-grid-cell .svy-calendar {
+	border-radius : 4px;
+}
+
+.ui-grid-cell .input-group-addon {
+	border: 0px;
+	background: inherit;
+}
+
+/* style combobox in table */
+.ui-grid-cell .svy-combobox .ui-select-toggle {
+	border-radius: 0px;
+    box-shadow: none;
+    border-top: 0;
+    border-right: 0;
+} 
+
+.ui-grid-cell .btn-group-addon {
+	border-radius: 0px;
+	border-top: 0;
+    border-right: 0;
+    background: inherit;
+}
+
+/*
+div.ui-grid-cell input.ng-valid {
+    border: 0px;
+    box-shadow: none;
+} */
+
+div.ui-grid-cell .svy-combobox  input.ng-valid {
+	height: 100%;
+	border-top: 0;
+    border-right: 0;
+    border-bottom: 1px solid rgb(173, 173, 173);
+    border-left: 1px solid rgb(173, 173, 173);
+}
+
+/* combobox padding */
+.ui-select-choices-row>a>div {
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+/* buttons */
+.btn-tertiary {
+	color: #555;
+   	background-color: #eee;
+    padding: 0px;
+}
+
+.btn-group-addon {
+	border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.btn-group-addon .ui-select-toggle {
+	border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+/* window header */
+.window .window-header {
+    background-color: #5bc0de;
+    color: white;
+    min-height: 16.42857143px;
+    padding: 15px;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.window.active .window-header .window-title {
+	color: white;
+}
+
+.window .window-header .svy-dialog-close {
+	display: none;
+}
+
+/* popup menu */
+.yuimenu {
+    background-color: white;
+    border-radius: 4px;
+    padding:0px;
+}
+
+.yuimenubaritem-selected, .yuimenuitem-selected {
+    background-color: #337ab7;
+}
+
+.yuimenu .yuimenubaritemlabel-selected, .yuimenu .yuimenuitemlabel-selected {
+    color: white;
+}

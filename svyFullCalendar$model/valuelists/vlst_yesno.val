@@ -1,0 +1,6 @@
+addEmptyValue:1,
+customValues:"no|0\r\
+yes|1",
+name:"vlst_yesno",
+typeid:34,
+uuid:"C3B62A3E-9089-4851-A010-3E20BBF03F4A"

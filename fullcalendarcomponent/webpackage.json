@@ -1,0 +1,10 @@
+{
+    "name":"fullcalendarcomponent",
+    "displayName":"Fullcalendar Component",
+    "packageType": "Web-Component",
+    "icon": "https://raw.githubusercontent.com/Servoy/fullcalendarcomponent/master/fullcalendar.png",
+    "description": "This is the package contains a calendar component which display events on a full-sized calendar and supports drag & drop event. The component a 1-to-1 implementation of the fullcalendar J-Query plugin.",
+    "wikiUrl": "https://github.com/Servoy/fullcalendarcomponent/wiki",
+    "sourceUrl" : "https://github.com/Servoy/fullcalendarcomponent",
+    "releases" : [{"version":"1.0.1","url":"https://github.com/Servoy/fullcalendarcomponent/releases/download/v1.0.1/fullcalendarcomponent.zip", "servoy-version":"8.1"}]
+}

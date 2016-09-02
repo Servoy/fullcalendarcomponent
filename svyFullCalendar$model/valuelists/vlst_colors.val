@@ -1,0 +1,11 @@
+addEmptyValue:1,
+customValues:"black|#000000\r\
+blue|#2980B9\r\
+green|#196F3D\r\
+orange|#FFC300\r\
+purple|#8E44AD\r\
+red|#FF5733\r\
+yellow|#F4D03F",
+name:"vlst_colors",
+typeid:34,
+uuid:"EC4CD18F-CBF9-4B7A-A90F-ED340BA193A6"

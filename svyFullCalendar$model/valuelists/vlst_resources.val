@@ -1,0 +1,11 @@
+addEmptyValue:1,
+dataProviderID1:"resource_id",
+dataProviderID2:"name",
+dataSource:"db:/fullcalendar/resources",
+name:"vlst_resources",
+returnDataProviders:1,
+separator:" |",
+showDataProviders:2,
+typeid:34,
+uuid:"9DB3D7A2-A83A-40A9-BB55-5DCD6B12C293",
+valueListType:1

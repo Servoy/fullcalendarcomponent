@@ -1,0 +1,6 @@
+dataSource:"db:/fullcalendar/event_object",
+onAfterDeleteMethodID:"579C43E1-1C61-437B-9D03-0971430691BE",
+onAfterInsertMethodID:"A83999BE-B6E0-48C7-A023-ED11C530CDC0",
+onAfterUpdateMethodID:"6AF285E0-0BB2-403C-A5AD-49C20235D0F0",
+typeid:39,
+uuid:"5829FE1B-F8B6-4160-BD83-DD8870635785"
