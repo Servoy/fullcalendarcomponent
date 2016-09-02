@@ -118,8 +118,8 @@
 					"type": "EventType",
 				 	"name": "eventObject"
 				 }, {
-					"type": "delta",
-					"name": "int"
+					"type": "int",
+					"name": "delta"
 				 }, {
 				 	"type": "JSEvent",
 				 	"name": "event"
@@ -133,8 +133,8 @@
 					"type": "EventType",
 				 	"name": "eventObject"
 				 }, {
-					"type": "delta",
-					"name": "int"
+					"type": "int",
+					"name": "delta"
 				 }, {
 				 	"type": "JSEvent",
 				 	"name": "event"
