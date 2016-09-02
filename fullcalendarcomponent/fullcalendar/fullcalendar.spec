@@ -11,11 +11,6 @@
 			"url": "fullcalendarcomponent/fullcalendar/lib/fullcalendar.2.6.1.min.css",
 			"mimetype": "text/css"
 		},{
-			"name": "moment-with-locale.min.js",
-			"version": "2.3.0",
-			"url": "fullcalendarcomponent/fullcalendar/lib/moment-with-locale.min.js",
-			"mimetype": "text/javascript"
-		},{
 			"name": "fullcalendar.js",
 			"version": "2.6.1",
 			"url": "fullcalendarcomponent/fullcalendar/lib/fullcalendar.2.6.1.min.js",
@@ -29,16 +24,6 @@
 			"name": "fullcalendar.lang.js",
 			"version": "2.6.1",
 			"url": "fullcalendarcomponent/fullcalendar/lang/lang-all.js",
-			"mimetype": "text/javascript"
-		},{
-			"name": "scheduler.css",
-			"version": "1.2.1",
-			"url": "fullcalendarcomponent/fullcalendar/scheduler/scheduler.1.2.1.css",
-			"mimetype": "text/css"
-		},{
-			"name": "scheduler.js",
-			"version": "1.2.1",
-			"url": "fullcalendarcomponent/fullcalendar/scheduler/scheduler.1.2.1.js",
 			"mimetype": "text/javascript"
 		}],
 	"version": 1,
