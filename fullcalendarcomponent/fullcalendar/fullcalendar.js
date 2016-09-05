@@ -63,6 +63,36 @@ angular.module('svyFullcalendar', ['servoy']).directive('svyFullcalendar', funct
 
 				$scope.view; // current view
 				$scope.eventSources; // parsed eventSources
+				
+				// TODO move into a global scope
+				var LOG_LEVEL = {
+					INFO: 1,
+					DEBUG: 2,
+					WARN: 3,
+					ERROR: 4
+				}
+				
+				/** 
+				 * @param {Object} msg,
+				 * @param {Number} [level]
+				 * */
+				function log(msg, level) {
+					switch (level) {
+					case LOG_LEVEL.ERROR:
+						$log.error(msg);
+						break;
+					case LOG_LEVEL.WARN:
+						$log.warn(msg);
+						break;
+					case LOG_LEVEL.INFO:
+						$log.info(msg);
+						break;
+					case LOG_LEVEL.DEBUG:
+					default:
+						if ($log.debugEnabled) $log.debug(msg);
+						break;
+					}
+				}
 
 				/* redraw the calendar to center it */
 				angular.element($window).bind("resize", onWindowResize);
@@ -141,8 +171,8 @@ angular.module('svyFullcalendar', ['servoy']).directive('svyFullcalendar', funct
 						retValue.then(function(success) {
 								callbackFunction(success)
 							}, function(error) {
-								console.log('handler error')
-								console.log(error)
+								log('handler error', LOG_LEVEL.ERROR);
+								log(error, LOG_LEVEL.ERROR);
 							});
 					}
 					return source;
@@ -239,8 +269,8 @@ angular.module('svyFullcalendar', ['servoy']).directive('svyFullcalendar', funct
 									revertFunc();
 								}
 							}, function(error) {
-								console.log('onResize handler error')
-								console.log(error)
+								log('onResize handler error', LOG_LEVEL.ERROR);
+								log(error, LOG_LEVEL.ERROR);
 							});
 					}
 				}
@@ -253,8 +283,8 @@ angular.module('svyFullcalendar', ['servoy']).directive('svyFullcalendar', funct
 									revertFunc();
 								}
 							}, function(error) {
-								console.log('onDrop handler error')
-								console.log(error)
+								log('onDrop handler error', LOG_LEVEL.ERROR);
+								log(error, LOG_LEVEL.ERROR);
 							});
 					}
 				}
@@ -315,8 +345,8 @@ angular.module('svyFullcalendar', ['servoy']).directive('svyFullcalendar', funct
 					$scope.model.view.defaultDate = parseMoment(date);
 					$scope.svyServoyapi.apply("view");
 
-					//console.log("view rendered on:");
-					//console.log(view);
+					log("view rendered on:");
+					log(view);
 
 					// fire onViewRenderMethodID
 					if ($scope.handlers.onViewRenderMethodID) {
@@ -327,7 +357,7 @@ angular.module('svyFullcalendar', ['servoy']).directive('svyFullcalendar', funct
 				}
 
 				function parseMoment(m) {
-					// console.log(m.toDate().toUTCString().replace(" GMT", ""))
+					// log(m.toDate().toUTCString().replace(" GMT", ""))
 					return m.toDate().getTime();//.toUTCString().replace(" GMT", ""); //m.toDate();
 					//return m.toDate().toUTCString().replace(" GMT", ""); //m.toDate();
 				}
@@ -360,8 +390,8 @@ angular.module('svyFullcalendar', ['servoy']).directive('svyFullcalendar', funct
 							break;
 						}
 					}
-//					console.log('parsing event')
-//					console.log(parsedEvent)
+					log('parsing event')
+					log(parsedEvent)
 					return parsedEvent
 				}
 
@@ -421,13 +451,13 @@ angular.module('svyFullcalendar', ['servoy']).directive('svyFullcalendar', funct
 						clientEvent = clientEvents[0];
 					} else if (clientEvents && clientEvents.length > 1) {
 						throw("Having multiple events with same id is not supported yet");
-						console.log("Having multiple events with same id is not supported yet");
+						log("Having multiple events with same id is not supported yet", LOG_LEVEL.ERROR);
 						for (var i = 0; i < clientEvents.length; i++) {
 							// TODO provide old event and/or expose functionality to compare
 							// return clientEvents[0];
 						}
 					} else {
-						console.log("Could not find client event");
+						log("Could not find client event", LOG_LEVEL.WARN);
 						clientEvent = null
 					}
 					return clientEvent
@@ -478,7 +508,6 @@ angular.module('svyFullcalendar', ['servoy']).directive('svyFullcalendar', funct
 				}
 
 				$scope.api.changeView = function(viewName) {
-					// console.log($scope.model.calendarOptions);
 					calendar.fullCalendar('changeView', viewName);
 				}
 
@@ -561,8 +590,8 @@ angular.module('svyFullcalendar', ['servoy']).directive('svyFullcalendar', funct
 
 				// TODO the component API should not modify the dataprovider
 				$scope.api.renderEvent = function(event, stick) {
-					//console.log("API: render event");
-					//console.log(event);
+					log("API: render event");
+					log(event);
 					
 					var eventSource;
 					if (event.source) {	// find eventSource by id
@@ -685,7 +714,7 @@ angular.module('svyFullcalendar', ['servoy']).directive('svyFullcalendar', funct
 								calendar.fullCalendar('removeEventSource', eventSource);
 								$scope.eventSources.splice(index, 1);
 							} else {
-								console.log("could not remove eventSource " + id)
+								log("could not remove eventSource " + id, LOG_LEVEL.WARN)
 							}
 						});
 					}
@@ -737,7 +766,7 @@ angular.module('svyFullcalendar', ['servoy']).directive('svyFullcalendar', funct
 						if (retValue == true) { 	// remove resource
 							calendar.fullCalendar('removeResource', id);
 						} else {
-							console.log("could not remove resource " + id);
+							log("could not remove resource " + id, LOG_LEVEL.WARN);
 						}
 					});
 				}
@@ -745,9 +774,10 @@ angular.module('svyFullcalendar', ['servoy']).directive('svyFullcalendar', funct
 			},
 			link: function($scope, $element, $attrs) {
 
+				// re-render fullcalendar
 				$scope.$watch("model.calendarOptions", function(newValue, oldValue) {
-						// TODO a possible solution would be to collect options and resources in a single object from a Server side API.
-						// console.log("watch calendarOptions hasToDraw " + $scope.model.hasToDraw + " -> " + false)
+						// another possible solution would be to collect options and resources in a single object from a Server side API.
+						// console.log("watch calendarOptions hasToDraw " + $scope.model.hasToDraw + " -> " + false);
 
 						if (newValue) {
 							$scope.initFullCalendar();
@@ -759,8 +789,9 @@ angular.module('svyFullcalendar', ['servoy']).directive('svyFullcalendar', funct
 						}
 					});
 
+				// check if eventSources is added
 				$scope.$watch("model.calendarOptions.eventSources.length", function(newValue, oldValue) {
-						// TODO a possible solution would be to collect options and resources in a single object from a Server side API.
+						// another possible solution would be to collect options and resources in a single object from a Server side API.
 						// console.log("eventSources is changed " + oldValue + " -> " + newValue)
 						// console.log("watch eventSources hasToDraw " + $scope.model.hasToDraw + " -> " + false)
 
@@ -777,8 +808,8 @@ angular.module('svyFullcalendar', ['servoy']).directive('svyFullcalendar', funct
 						}
 					});
 				
+				// check if resource is added
 				$scope.$watch("model.calendarOptions.resources.length", function(newValue, oldValue) {
-					// TODO a possible solution would be to collect options and resources in a single object from a Server side API.
 					// console.log("resource is changed" + oldValue + " -> " + newValue)
 
 					// checking the length is necessary to understand if resource has been added
