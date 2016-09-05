@@ -75,14 +75,13 @@ function getEventSourceIndexById(eventSources, id) {
  *
  * */
 $scope.api.fullCalendar = function(options, renderOnCurrentView) {
-	//	var object = new Object();
-	//	object.options = options;
-	//	$scope.model.calendarOptions = object;
+
 	var copy;
 	var functionEventSources = [];
 	var arrayEventSources = [];
 	var gcalEventSources = [];
 
+	// parse event sources
 	if (options) {
 		copy = { }
 		for (var property in options) {

@@ -61,7 +61,8 @@ angular.module('svyFullcalendar', ['servoy']).directive('svyFullcalendar', funct
 				var eventRender;
 				var viewRender;
 
-				$scope.view;
+				$scope.view; // current view
+				$scope.eventSources; // parsed eventSources
 
 				/* redraw the calendar to center it */
 				angular.element($window).bind("resize", onWindowResize);
@@ -73,45 +74,6 @@ angular.module('svyFullcalendar', ['servoy']).directive('svyFullcalendar', funct
 
 				function onWindowResize() {
 					$scope.api.option("height", calendar.height());
-				}
-
-				/* config object */
-				/**
-				 * @deprecated
-				 *  */
-				$scope.uiConfig = {
-					calendar: {
-						height: $scope.model.size.height,
-						editable: true,
-						header: {
-							left: 'month, basicWeek, basicDay, agendaWeek, agendaDay',
-							center: 'title',
-							right: 'today, prev next'
-						},
-						select: select,
-						dayClick: dayClick,
-						eventClick: eventClick,
-						eventDrop: eventDrop,
-						eventResize: eventResize
-					}
-				};
-
-				//				for (var item in $scope.model.calendarOptions) {
-				//					$scope.uiConfig.calendar[item] = $scope.model.calendarOptions[item]
-				//				}
-
-				/* private method */
-				function getCalendarOptions() {
-					if ($scope.model.calendarOptions) {
-						return $scope.model.calendarOptions//.options
-					} else {
-						return null;
-					}
-				}
-
-				/* private method */
-				function setOption(optionName, value) {
-					// TODO chech if value != null/undefined and set the value to the option object
 				}
 
 				/** init the fullcalendar. will destroy the calendar if existing already */
@@ -128,6 +90,15 @@ angular.module('svyFullcalendar', ['servoy']).directive('svyFullcalendar', funct
 						calendar.fullCalendar('destroy');
 					}
 				};
+				
+				/* private method */
+				function getCalendarOptions() {
+					if ($scope.model.calendarOptions) {
+						return $scope.model.calendarOptions
+					} else {
+						return null;
+					}
+				}
 
 				/** return the eventSource object */
 				function getEventSources() {
@@ -198,7 +169,6 @@ angular.module('svyFullcalendar', ['servoy']).directive('svyFullcalendar', funct
 						for (var property in calendarOptions) {
 							// TODO parse
 							// slotDuration
-
 							options[property] = calendarOptions[property]
 						}
 					}
@@ -212,7 +182,7 @@ angular.module('svyFullcalendar', ['servoy']).directive('svyFullcalendar', funct
 					if (!options.timezone) {
 						options.timezone = TIMEZONE_DEFAULT;
 						// TODO is possible to explicitly set the today time/day using now
-						//						options.now = new DateTime('now', 'America/Chicago');
+						// options.now = new DateTime('now', 'America/Chicago');
 					}
 
 					// TODO events are not fully supported yet
@@ -229,14 +199,7 @@ angular.module('svyFullcalendar', ['servoy']).directive('svyFullcalendar', funct
 
 				/* Calendar Callbacks */
 				select = function(start, end, jsEvent, view, resource) {
-					//console.log(view);
-					//console.log(resource);
 					if ($log.debugEnabled) $log.debug(view);
-
-					//					console.log(start)
-					//					console.log(parseMoment(start))
-					//					console.log(end)
-					//					console.log(parseMoment(end))
 
 					if ($scope.handlers.onSelectMethodID) {
 						// if jsEvent is undefined create a jsEvent. May be the case if selection is triggered from API
@@ -280,15 +243,9 @@ angular.module('svyFullcalendar', ['servoy']).directive('svyFullcalendar', funct
 								console.log(error)
 							});
 					}
-
 				}
 
 				eventDrop = function(event, delta, revertFunc, jsEvent, ui, view) {
-					//console.log(event)
-					//console.log(delta)
-					//console.log(ui)
-					//console.log(view)
-
 					if ($scope.handlers.onEventDropMethodID) {
 						var retValue = $scope.handlers.onEventDropMethodID(stringifyEvent(event), delta, jsEvent, stringifyView(view))
 						retValue.then(function(success) {
@@ -300,7 +257,6 @@ angular.module('svyFullcalendar', ['servoy']).directive('svyFullcalendar', funct
 								console.log(error)
 							});
 					}
-
 				}
 
 				function evaluateTooltipExpression(expression, event) {
@@ -502,12 +458,6 @@ angular.module('svyFullcalendar', ['servoy']).directive('svyFullcalendar', funct
 					$scope.model.events = []
 				}
 
-				//				/* set event Sources */
-				//				$scope.eventSources = [$scope.model.events,
-				//				//$scope.functionEventSource,
-				//				$scope.model.eventSourceDataprovider,
-				//				$scope.model.functionEventSourceDataprovider];
-
 				/* **********************************************************************************************************
 				 * Api
 				 * **********************************************************************************************************/
@@ -527,7 +477,6 @@ angular.module('svyFullcalendar', ['servoy']).directive('svyFullcalendar', funct
 					return stringifyView(view)
 				}
 
-				// TODO test
 				$scope.api.changeView = function(viewName) {
 					// console.log($scope.model.calendarOptions);
 					calendar.fullCalendar('changeView', viewName);
@@ -556,7 +505,6 @@ angular.module('svyFullcalendar', ['servoy']).directive('svyFullcalendar', funct
 				}
 
 				$scope.api.incrementDate = function(years, months, days) {
-					// TODO translate into duration
 					var duration = { }
 					if (years) duration.years = years
 					if (months) duration.months = months
@@ -657,7 +605,9 @@ angular.module('svyFullcalendar', ['servoy']).directive('svyFullcalendar', funct
 					}
 					var clientEvent = getClientEvent(event);
 					if (clientEvent) {
+						
 						var property;
+						
 						// remove old properties from the clientSide event
 						var originalClientEvent = stringifyEvent(clientEvent);
 						for (property in originalClientEvent) {
@@ -705,13 +655,10 @@ angular.module('svyFullcalendar', ['servoy']).directive('svyFullcalendar', funct
 				 *
 				 *  */
 				$scope.addEventSource = function(eventSource) {
+					// add the event source into the $scope.eventSource
 					if (eventSource) {
-						// in the controller or link functions you can use that then
-						//						 $scope.svyServoyapi.callServerSideApi("addEventSource",[eventSource]).then(function(retValue) {
-						//							if (retValue == true) {
-
 						var parsedEventSource = eventSource;
-						if (eventSource.events && eventSource.events.script) { // remove it from function eventSources
+						if (eventSource.events && eventSource.events.script) { // parse event source
 							parsedEventSource = transformFunctionEventSource(eventSource);
 						} else if (eventSource.events instanceof Array) {
 						} else if (eventSource.googleCalendarId && eventSource.googleCalendarId instanceof String) {
@@ -720,36 +667,7 @@ angular.module('svyFullcalendar', ['servoy']).directive('svyFullcalendar', funct
 						$scope.eventSources.push(parsedEventSource);
 
 						calendar.fullCalendar('addEventSource', parsedEventSource);
-						//							} else {
-						//								console.log("could not remove eventSource " + id)
-						//							}
-						//						 });
 					}
-
-					//					var parsedEventSource = eventSource;
-					//					if (eventSource.events) {
-					//						var modelEventSources
-					//						// find type of eventSource
-					//						if (eventSource.events.script) { // remove it from function eventSources
-					//							modelEventSources = $scope.model.functionEventSources;
-					//							parsedEventSource = transformFunctionEventSource(eventSource);
-					//						} else if (eventSource.events instanceof Array) {
-					//							modelEventSources = $scope.model.arrayEventSources;
-					//						} else if (eventSource.events instanceof String) {
-					//							// TODO
-					//						} else {
-					//							// TODO could not find eventSource;
-					//						}
-					//
-					//						// removed eventSource from calendar and from cache
-					//						calendar.fullCalendar('addEventSource', parsedEventSource);
-					//						modelEventSources.push(eventSource);	// remove original eventSource
-					//						$scope.eventSources.push(parsedEventSource);	// remove eventSource from scope
-					//						// TODO apply a change to the eventSource will trigger a refresh of the calendar
-					//						// $scope.svyServoyapi.apply("functionEventSources");
-					//						// TODO delete it from array
-					//						// $scope.svyServoyapi.apply("arrayEventSources")
-					//					}
 				}
 
 				/**
@@ -771,43 +689,6 @@ angular.module('svyFullcalendar', ['servoy']).directive('svyFullcalendar', funct
 							}
 						});
 					}
-
-					//					// TODO remove eventSource from scope
-					//					var index = getEventSourcesIndexById(id);
-					//					if (index >= 0) {
-					//						var eventSource = $scope.eventSources[index]
-					//
-					//						var modelEventSources
-					//						if (eventSource.events) {
-					//
-					//							// find type of eventSource
-					//							if (eventSource.events instanceof Function) { // remove it from function eventSources
-					//								modelEventSources = $scope.model.functionEventSources;
-					//							} else if (eventSource.events instanceof Array) {
-					//								modelEventSources = $scope.model.arrayEventSources;
-					//							} else if (eventSource.events instanceof String) {
-					//								// TODO
-					//							} else {
-					//								// TODO could not find eventSource;
-					//							}
-					//
-					//							// removed eventSource from calendar and from cache
-					//							for (var i = 0; modelEventSources && i < modelEventSources.length; i++) {
-					//								if (modelEventSources[i].id === id) {
-					//									calendar.fullCalendar('removeEventSource', eventSource);
-					//									modelEventSources.splice(i, 1);	// remove original eventSource
-					//									$scope.eventSources.splice(index,1);	// remove eventSource from scope
-					//									// TODO apply a change to the eventSource will trigger a refresh of the calendar
-					//									// $scope.svyServoyapi.apply("functionEventSources");
-					//									// TODO delete it from array
-					//									// $scope.svyServoyapi.apply("arrayEventSources")
-					//									return true;
-					//								}
-					//							}
-					//						}
-					//					}
-					//					return false;
-
 				}
 
 				/**
@@ -847,14 +728,7 @@ angular.module('svyFullcalendar', ['servoy']).directive('svyFullcalendar', funct
 
 				/* Scheduler API */
 				$scope.addResource = function(resource, scroll) {
-					// call the server side API to persist the resource in the calendarOptions object
-//					$scope.svyServoyapi.callServerSideApi("addResource", [resource]).then(function(retValue) {
-//						if (retValue == true) {		// add resource
-							calendar.fullCalendar('addResource', resource, scroll);
-//						} else {
-//							console.log("could not add resource " + resource.id + ' ' + resource.title);
-//						}
-//					});
+					calendar.fullCalendar('addResource', resource, scroll);
 				}
 				
 				$scope.api.removeResource = function(id) {
@@ -867,13 +741,7 @@ angular.module('svyFullcalendar', ['servoy']).directive('svyFullcalendar', funct
 						}
 					});
 				}
-
-				//				/** @deprecated
-				//				 * use render instead */
-				//				$scope.api.refreshCalendar = function() {
-				//					$scope.initFullCalendar();
-				//				}
-
+				
 			},
 			link: function($scope, $element, $attrs) {
 
@@ -919,74 +787,6 @@ angular.module('svyFullcalendar', ['servoy']).directive('svyFullcalendar', funct
 						$scope.addResource(resource);
 					}
 				});
-
-				//				$scope.$watch("model.arrayEventSources", function(newValue, oldValue) {
-				//						if (newValue) {
-				//							$scope.initFullCalendar();
-				//						}
-				//						// FIXME this trigger continuosly the watch
-				//						//$scope.svyServoyapi.apply("eventSources");
-				//					});
-				//
-				//				$scope.$watch("model.functionEventSources", function(newValue, oldValue) {
-				//						console.log("change functionEventSources")
-				//						if (newValue) {
-				//							$scope.initFullCalendar();
-				//						}
-				//						// FIXME this trigger continuosly the watch
-				//						//$scope.svyServoyapi.apply("eventSources");
-				//					});
-				//
-				//				$scope.$watch("model.gcalEventSources", function(newValue, oldValue) {
-				//					if (newValue) {
-				//						$scope.initFullCalendar();
-				//					}
-				//					// FIXME this trigger continuosly the watch
-				//					//$scope.svyServoyapi.apply("eventSources");
-				//				});
-
-				/* watcher */
-				//				if ($scope.model.foundsetToShow) {
-				//					$scope.$watch('model.foundsetToShow.serverSize', function(newValue) {
-				//							var wanted = Math.min(newValue, 10);
-				//							if (wanted > $scope.model.foundsetToShow.viewPort.size) {
-				//								$scope.model.foundsetToShow.loadRecordsAsync(0, wanted);
-				//							}
-				//						});
-				//
-				//					$scope.$watch('model.foundsetToShow.viewPort.size', function(newValue) {
-				//							if (newValue == 0 && $scope.model.foundsetToShow.serverSize > 0) {
-				//								var wanted = Math.min($scope.model.foundsetToShow.serverSize, 10);
-				//								if (wanted > $scope.model.foundsetToShow.viewPort.size) {
-				//									$scope.model.foundsetToShow.loadRecordsAsync(0, wanted);
-				//								}
-				//							}
-				//						});
-				//
-				//					/* this watch is too expensive. */
-				//					$scope.$watch('model.foundsetToShow.viewPort.rows', function(newValue) {
-				//							getFoundsetEvents();
-				//						}, true);
-				//				}
-
-				//				function getFoundsetEvents() {
-				//					console.log('clear foundset events')
-				//					var rows = $scope.model.foundsetToShow.viewPort.rows
-				//					var row;
-				//					$scope.foundsetEventSource.events.length = 0
-				//					for (var i = 0; i < rows.length; i++) {
-				//						row = rows[i];
-				//						// TODO populate the event
-				//						$scope.foundsetEventSource.events.push({
-				//							title: row.title,
-				//							start: row.start,
-				//							end: row.end,
-				//							allDay: row.allDay
-				//						});
-				//
-				//						console.log(row)
-				//					}
-				//				}
 
 			},
 			templateUrl: 'fullcalendarcomponent/fullcalendar/fullcalendar.html',
