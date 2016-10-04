@@ -29,8 +29,13 @@ a:focus {
 
 .fc-event.icon-servoy .fc-title:before {
 	content: url('icons/servoy.png'); 	/* the calendar icon to be displayed */
+	-moz-transform:  scale(0.15,0.15);
+	-moz-transform-origin: left center;
+	-ms-zoom: 0.15;
+	-webkit-zoom: 0.15;
 	zoom: 0.15;		/* use zoom to change content size */
 	padding: 0 20px;	/* padding is higher because of zooming */
+	display: inline-block;
 }
 
 .fc-event.icon-apple .fc-title:before {
