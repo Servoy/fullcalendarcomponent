@@ -1,3 +1,5 @@
+@import url('FontAwesomeCSS/font-awesome.css');
+
 /* general */
 :focus,
 a:focus {
@@ -22,6 +24,30 @@ a:focus {
 .fc-event.custom-icon .fc-time:before {
 	font-family: 'Glyphicons Halflings'; /* use the glyphicons */
 	content: "\e109"; /* the calendar icon to be displayed */
+	padding: 0 3px;
+}
+
+.fc-event.icon-servoy .fc-title:before {
+	content: url('icons/servoy.png'); 	/* the calendar icon to be displayed */
+	zoom: 0.15;		/* use zoom to change content size */
+	padding: 0 20px;	/* padding is higher because of zooming */
+}
+
+.fc-event.icon-apple .fc-title:before {
+	font-family: 'FontAwesome'; /* use the glyphicons */
+	content: "\f179"; /* the calendar icon to be displayed */
+	padding: 0 3px;
+}
+
+.fc-event.icon-microsoft .fc-title:before {
+	font-family: 'FontAwesome'; /* use the glyphicons */
+	content: "\f17a"; /* the calendar icon to be displayed */
+	padding: 0 3px;
+}
+
+.fc-event.icon-google .fc-title:before {
+	font-family: 'FontAwesome'; /* use the glyphicons */
+	content: "\f17b"; /* the calendar icon to be displayed */
 	padding: 0 3px;
 }
 

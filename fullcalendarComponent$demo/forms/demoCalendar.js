@@ -514,6 +514,9 @@ function getEventSource(record) {
 		throw new scopes.svyExceptions.IllegalArgumentException('illegal argument foundset NULL')
 	}
 	
+	// className can be 'icon-servoy' or 'icon-microsoft' or 'icon-google' or 'icon-apple'
+	var className = 'icon-' + record.name.toLowerCase();
+	
 	/** @type {svy-fullcalendar.EventSourceType} */
 	var eventSource = {
 		id: record.resource_id.toString(),
@@ -523,7 +526,8 @@ function getEventSource(record) {
 		editable: true,
 		startEditable: true,
 		durationEditable: true,
-		allDayDefault: false
+		allDayDefault: false,
+		className : [className]	// use className to display the event source icon
 	}
 	
 	return eventSource
@@ -554,8 +558,8 @@ function getEvent(record) {
 		borderColor: record.border_color,
 		color : record.color,
 		backgroundColor: record.background_color,
-		textColor: record.text_color,
-		className: 'custom-icon'	// use css class to show an icon in the calendar event
+		textColor: record.text_color
+	//	className: 'custom-icon'	// use css class to show an icon in the calendar event
 	}
 	if (record.end_date) { // set end time if exist
 		event.end = record.end_date;
