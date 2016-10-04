@@ -17,6 +17,14 @@ a:focus {
 	min-height: 1em;
 }
 
+/* Show custom icons in calendar events
+ For all the calendar events having className 'custom-icon' show the glyphicon-calendar before the displayed time */
+.fc-event.custom-icon .fc-time:before {
+	font-family: 'Glyphicons Halflings'; /* use the glyphicons */
+	content: "\e109"; /* the calendar icon to be displayed */
+	padding: 0 3px;
+}
+
 /* grid rows */
 .ui-grid-row-selected div.ui-grid-cell {
     background-color: transparent !important;

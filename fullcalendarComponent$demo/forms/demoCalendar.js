@@ -554,7 +554,8 @@ function getEvent(record) {
 		borderColor: record.border_color,
 		color : record.color,
 		backgroundColor: record.background_color,
-		textColor: record.text_color
+		textColor: record.text_color,
+		className: 'custom-icon'	// use css class to show an icon in the calendar event
 	}
 	if (record.end_date) { // set end time if exist
 		event.end = record.end_date;
