@@ -771,6 +771,11 @@ angular.module('svyFullcalendar', ['servoy']).directive('svyFullcalendar', funct
 					});
 				}
 				
+				// render the fullcalendar in the Form Editor
+				if ($scope.svyServoyapi.isInDesigner()) {
+					$scope.initFullCalendar();
+				}
+				
 			},
 			link: function($scope, $element, $attrs) {
 
