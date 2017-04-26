@@ -250,13 +250,17 @@ function onLoad(event) {
 		selectable: false,
 		editable: false,
 		defaultView: fullCalendar.CALENDAR_VIEW_TYPE.MONTH,
-		header: false,
 		contentHeight: 'auto',
+		height: 'auto',
 		aspectRatio: 2,
 		columnFormat: {
 			month: 'dd',
 			week: 'ddd M/d',
 			day: 'dddd M/d'
+		},
+		header: {
+			right: 'prev,next',
+			left: 'title'
 		}
 	});
 }
@@ -558,9 +562,9 @@ function getEvent(record) {
 		borderColor: record.border_color,
 		color : record.color,
 		backgroundColor: record.background_color,
-		textColor: record.text_color
-	//	className: 'custom-icon'	// use css class to show an icon in the calendar event
+		textColor: record.text_color,
 	}
+	
 	if (record.end_date) { // set end time if exist
 		event.end = record.end_date;
 	}
@@ -788,7 +792,7 @@ function onEventUpdate(eventObject, delta, event, view) {
  * @properties={typeid:24,uuid:"CE9147B7-6056-4B48-9BFA-0D1F9E916AEC"}
  */
 function logEventHandler(type, event, eventObject, viewObject, resource) {
-	var msg = "EVENT " + type + " " + event.getElementName() 
+	var msg = "EVENT " + type + " " + event.getElementName() + " x: " + event.getX() + " y " + event.getY();
 	if (eventObject) msg+= ' | title: ' + eventObject.title + ' id:' + eventObject.id
 	if (eventObject && eventObject.data && eventObject.data.description) msg+= ' description ' + eventObject.data.description;
 	if (eventObject && eventObject.resourceIds) msg += ' | resource '  + eventObject.resourceIds[0];

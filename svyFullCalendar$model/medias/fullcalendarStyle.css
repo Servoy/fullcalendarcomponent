@@ -171,3 +171,31 @@ div.ui-grid-cell .svy-combobox  input.ng-valid {
 .yuimenu .yuimenubaritemlabel-selected, .yuimenu .yuimenuitemlabel-selected {
     color: white;
 }
+
+/* fc-dateSelector */
+
+.fc-dateselector .fc-toolbar {
+	font-size: 14px;
+	margin-bottom: 0px;
+}
+
+.fc-dateselector .fc-toolbar h2 {
+	padding-left: 2px;
+	font-size: 14px;
+}
+
+.fc-dateselector .fc-toolbar .fc-button{
+	height: 16px;
+	line-height: 16px;
+	background: white;
+}
+
+.fc-dateselector .fc-toolbar .fc-button-group .fc-button {
+	padding: 0 4px;
+	border: none;
+	box-shadow: none;
+}
+
+.fc-dateselector .fc-basic-view .fc-day-number {
+	text-align: center;
+}
