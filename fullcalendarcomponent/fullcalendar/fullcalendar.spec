@@ -4,8 +4,12 @@
 	"icon" : "fullcalendarcomponent/fullcalendar/fullcalendar.png",
 	"definition": "fullcalendarcomponent/fullcalendar/fullcalendar.js",
 	"serverscript": "fullcalendarcomponent/fullcalendar/fullcalendar_server.js",
-	"libraries": [
-		{
+	"libraries": [{ 
+			"name":"moment", 
+			"version":"1.0.0", 
+			"url": "fullcalendarcomponent/fullcalendar/lib/moment.min.js", 
+			"mimetype":"text/javascript"
+		},{
 			"name": "fullcalendar.css",
 			"version": "2.6.1",
 			"url": "fullcalendarcomponent/fullcalendar/lib/fullcalendar.2.6.1.min.css",
@@ -156,7 +160,7 @@
 				}]
 		},
 		"getFullCalendarOptions" : {
-			"returns": "object"
+			"returns": "FullCalendarOptions"
 		},
          	"select": {
             	"parameters": [{

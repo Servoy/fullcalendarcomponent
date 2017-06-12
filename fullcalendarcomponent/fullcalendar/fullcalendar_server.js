@@ -126,7 +126,7 @@ $scope.api.fullCalendar = function(options, renderOnCurrentView) {
 /**
  * Returns the calendar config object
  *
- * @return {Object}
+ * @return {svy-fullcalendar.FullCalendarOptions}
  * */
 $scope.api.getFullCalendarOptions = function() {
 	if ($scope.model.calendarOptions) {
