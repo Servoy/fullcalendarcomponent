@@ -69,6 +69,12 @@ name:"name"
 },
 {
 allowNull:true,
+creationOrderIndex:11,
+dataType:4,
+name:"render_flag"
+},
+{
+allowNull:true,
 creationOrderIndex:3,
 dataType:12,
 length:50,

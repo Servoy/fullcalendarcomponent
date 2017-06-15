@@ -565,6 +565,10 @@ function getEvent(record) {
 		textColor: record.text_color,
 	}
 	
+	if (utils.hasRecords(record, 'event_object_to_event_resources.event_resources_to_resources')) {
+		className: ['icon-' + record.event_object_to_event_resources.event_resources_to_resources.name.toLowerCase()];	// use css class to show an icon in the calendar event
+	}
+	
 	if (record.end_date) { // set end time if exist
 		event.end = record.end_date;
 	}
