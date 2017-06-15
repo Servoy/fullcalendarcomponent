@@ -72,6 +72,17 @@ function getEventSourceIndexById(eventSources, id) {
  * Initialize the fullcalendar with the config options.
  * If the calendar has been already initialized and any of the config options has been modified, the calendar
  * will be destroyed and repaint again.
+ * 
+ * @example <pre>  @type {svy-fullcalendar.FullCalendarOptions}
+  var options = {
+        eventSources: [ {events: [{ title: "lunch event", start: new Date() }]}],
+		selectable: true,
+		editable: true,
+		defaultView: 'agendaWeek',
+		showCurrentTimeline: true
+   }
+   elements.fullcalendarElementName.fullCalendar(options);
+</pre>
  *
  * */
 $scope.api.fullCalendar = function(options, renderOnCurrentView) {
@@ -127,6 +138,7 @@ $scope.api.fullCalendar = function(options, renderOnCurrentView) {
  * Returns the calendar config object
  *
  * @return {svy-fullcalendar.FullCalendarOptions}
+ * 
  * */
 $scope.api.getFullCalendarOptions = function() {
 	if ($scope.model.calendarOptions) {
@@ -143,6 +155,11 @@ $scope.api.getFullCalendarOptions = function() {
  * 
  * @param {String} option a single option to be updated
  * @param {Object} value
+ * 
+ * @example 
+ * <pre>
+ * 	elements.fullcalendarElementName.updateFullCalendar('scrollTime','13:00:00');
+ * </pre>
  *
  * */
 $scope.api.updateFullCalendar = function(option, value) {
@@ -154,14 +171,28 @@ $scope.api.updateFullCalendar = function(option, value) {
 }
 
 /**
- * @param {Object} eventSource
- *
+ * @param {svy-fullcalendar.EventSourceType} eventSource
+ * 
+ * @example 
+ * <pre>
+	@type {svy-fullcalendar.EventSourceType}
+	var arrayEventSource = {
+		events: [{
+	    	title: "source event",
+			start: new Date(),
+			allDay: true
+		}],
+		color: 'yellow'
+	}
+	
+	elements.fullcalendarElementname.addEventSource(arrayEventSource);
+ * </pre>
  * */
 $scope.api.addEventSource = function(eventSource) {
 	if (!eventSource) {
 		throw "Illegal argument eventSource " + eventSource;
 	}
-	
+	// FIXME requires a refresh if multiple eventSources are added
 	// push eventSource into the typed eventSource
 	switch (getEventSourceType(eventSource)) {
 	case EVENTSOURCE_TYPE.FUNCTION_SOURCE:
