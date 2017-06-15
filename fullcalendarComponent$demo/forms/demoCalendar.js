@@ -980,13 +980,11 @@ function onDayClickSelector(date, event, view, resource) {
 }
 
 /**
-*@protected 
+* @protected 
 * @properties={typeid:24,uuid:"E46FC259-DCCD-413A-BF8C-4B07AD7749ED"}
 */
 function gotoMorningTime() {
-	var options = calendar.getFullCalendarOptions();
-	options.scrollTime = "08:00:00"
-	calendar.fullCalendar(options, true);
+	calendar.updateFullCalendar('scrollTime','08:00:00');
 }
 
 /**
@@ -994,9 +992,7 @@ function gotoMorningTime() {
 * @properties={typeid:24,uuid:"6232C540-C2F0-4392-9994-FAA6C468B0C7"}
 */
 function gotoNoonTime() {
-	var options = calendar.getFullCalendarOptions();
-	options.scrollTime = "13:00:00"
-	calendar.fullCalendar(options, true);
+	calendar.updateFullCalendar('scrollTime','13:00:00');
 }
 
 
@@ -1076,22 +1072,23 @@ function initConfigMenu() {
 	var menuItem;
 	
 	// FIXME enable hidden days
-//	menu = configMenu.addMenu();
-//	menu.text = "hiddenDays";
-//	
-//	var hiddenDays = ["Sunday", "Monday", "Tuesday", "Wednsday", "Thursday", "Friday", "Saturday"];
-//	for (var i = 0; i < hiddenDays.length; i++) {
-//		menuItem = menu.addMenuItem();
-//		menuItem.text = hiddenDays[i];
-//		menuItem.selected = false;
-//		menuItem.setMethod(setCalendarOption);
-//		menuItem.methodArguments = ["hiddenDays", [i]];
-//	}
+	menu = configMenu.addMenu();
+	menu.text = "hiddenDays";
 	
-	menuItem = configMenu.addMenuItem();
+	var hiddenDays = ["Sunday", "Monday", "Tuesday", "Wednsday", "Thursday", "Friday", "Saturday"];
+	for (var i = 0; i < hiddenDays.length; i++) {
+		menuItem = menu.addCheckBox();
+		menuItem.text = hiddenDays[i];
+		menuItem.selected = false;
+		menuItem.setMethod(toggleHiddenDays);
+		menuItem.methodArguments = ["hiddenDays", i, 0];
+		
+	}
+	
+	menuItem = configMenu.addCheckBox();
 	menuItem.text = "Weekends";
 	menuItem.selected = true;
-	menuItem.setMethod(setCalendarOption,["weekends", false]);
+	menuItem.setMethod(toggleCalendarOption,["weekends", false]);
 	menuItem.methodArguments = ["weekends", false];
 
 }
@@ -1102,39 +1099,87 @@ function initConfigMenu() {
  * @param {Boolean} isSelected
  * @param {String} parentText
  * @param {String} menuText
- * @param {String} option
- * @param {Object} value
+ * @param {String} option the option to be toggled
+ * @param {Object} hiddenDay the hidden day to be toggled
+ * @param {Number} [parentIdx] optional param
+ * 
+ * @private 
+ *
+ * @properties={typeid:24,uuid:"D90114BF-6889-4DBA-8762-6EEFED3AE7BB"}
+ */
+function toggleHiddenDays(itemIndex, parentIndex, isSelected, parentText, menuText, option, hiddenDay, parentIdx) {
+	
+	var options = calendar.getFullCalendarOptions();
+	var hiddenDays = options.hiddenDays ? options.hiddenDays : [];
+	
+	if (!isSelected) {	// hide the selected day
+		hiddenDays = hiddenDays.concat([hiddenDay]);
+	} else if (hiddenDays) {  // remove selected day from hidden day list
+		hiddenDays.splice(hiddenDays.indexOf(hiddenDay),1);
+	} else {  
+		throw 'this should not happen'
+	}
+	
+	updateCalendarOption(option, hiddenDays);
+	updateMenuSelection(itemIndex, parentIdx, isSelected, parentText, menuText);
+}
+
+/**
+ * @param {Number} itemIndex
+ * @param {Number} parentIndex
+ * @param {Boolean} isSelected
+ * @param {String} parentText
+ * @param {String} menuText
+ * @param {String} option the option to be toggled
+ * @param {Object} value the option value
  * 
  * @private 
  *
  * @properties={typeid:24,uuid:"38086F08-0582-4193-9BEE-F8645526152A"}
  */
-function setCalendarOption(itemIndex, parentIndex, isSelected, parentText, menuText, option, value) {
+function toggleCalendarOption(itemIndex, parentIndex, isSelected, parentText, menuText, option, value) {
 	
+	// toggle the calendar option if item is now unselected
+	updateCalendarOption(option, !isSelected);
+	updateMenuSelection(itemIndex, parentIndex, isSelected, parentText, menuText);
+}
+
+/**
+ * update the menuItem selected property
+ * @param {Number} itemIndex
+ * @param {Number} parentIndex
+ * @param {Boolean} isSelected
+ * @param {String} parentText
+ * @param {String} menuText
+ * @private 
+ *
+ * @properties={typeid:24,uuid:"27E675B9-38D8-4CFF-A17D-B6FD3A93C90A"}
+ */
+function updateMenuSelection(itemIndex, parentIndex, isSelected, parentText, menuText) {
 	var menu;
 	if (parentIndex === -1) {
 		menu = configMenu;
-	} else {
+	} else if (parentIndex != -1) {
 		menu = configMenu.getItem(parentIndex);
-	}
+	} 
+	
 	var menuItem = menu.getItem(itemIndex);
 	
-	var options = calendar.getFullCalendarOptions();
-	var calendarValue = options[option];
-	
-	if (calendarValue && calendarValue instanceof Array) {
-		value = value.concat(calendarValue);
-	} else if (value instanceof Boolean) {
-		value = isSelected ? false : true;
-	} else {
-		// TODO disable it by removing it
-	}
 	if (menuItem) {
 		menuItem.selected = isSelected ? false : true;
 	}
 	
-	delete options[option]
-	
-	options[option] = value;
-	calendar.fullCalendar(options);
+}
+
+/**
+ * Update the calendar option with the given value
+ * 
+ * @param {String} option the option of the calendar to be updated
+ * @param {Object} value the value to update the option
+ * @private 
+ *
+ * @properties={typeid:24,uuid:"320F1719-C464-4799-83C0-454C080BBF47"}
+ */
+function updateCalendarOption(option, value) {
+	calendar.updateFullCalendar(option, value);
 }

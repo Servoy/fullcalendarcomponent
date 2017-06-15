@@ -67,11 +67,11 @@ function getEventSourceIndexById(eventSources, id) {
 
 /**
  * @param {Object} options
- * @param {Boolean} renderOnCurrentView
+ * @param {Boolean} [renderOnCurrentView] when the calendar is already initialized will repaint in the current view; will restore the view to the default value otherwise. Default: false.
  *
  * Initialize the fullcalendar with the config options.
  * If the calendar has been already initialized and any of the config options has been modified, the calendar
- * will be destroyed and re-init again.
+ * will be destroyed and repaint again.
  *
  * */
 $scope.api.fullCalendar = function(options, renderOnCurrentView) {
@@ -134,6 +134,23 @@ $scope.api.getFullCalendarOptions = function() {
 	} else {
 		return null;
 	}
+}
+
+
+/**
+ * Update the given calendar option to the given value
+ * The update will force the calendar to repaint.
+ * 
+ * @param {String} option a single option to be updated
+ * @param {Object} value
+ *
+ * */
+$scope.api.updateFullCalendar = function(option, value) {
+	var options = $scope.api.getFullCalendarOptions();
+	delete options[option];	// TODO is this necessary ?
+	
+	options[option] = value;
+	$scope.api.fullCalendar(options, true);
 }
 
 /**

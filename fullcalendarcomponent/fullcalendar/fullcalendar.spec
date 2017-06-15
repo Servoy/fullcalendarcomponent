@@ -162,6 +162,16 @@
 		"getFullCalendarOptions" : {
 			"returns": "FullCalendarOptions"
 		},
+		"updateFullCalendar" : {
+			"parameters" : [{
+								"name":"option",
+                                "type":"string"
+                                }, {                                                                
+                                "name":"value",
+                                "type":"object"
+                                }
+			]
+		},
          	"select": {
             	"parameters": [{
                                 "name":"startDate",
