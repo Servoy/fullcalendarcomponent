@@ -6,27 +6,27 @@
 	"serverscript": "fullcalendarcomponent/fullcalendar/fullcalendar_server.js",
 	"libraries": [{ 
 			"name":"moment", 
-			"version":"1.0.0", 
+			"version":"3.0.0", 
 			"url": "fullcalendarcomponent/fullcalendar/lib/moment.min.js", 
 			"mimetype":"text/javascript"
 		},{
 			"name": "fullcalendar.css",
-			"version": "2.6.1",
-			"url": "fullcalendarcomponent/fullcalendar/lib/fullcalendar.2.6.1.min.css",
+			"version": "2.9.1",
+			"url": "fullcalendarcomponent/fullcalendar/lib/fullcalendar.min.css",
 			"mimetype": "text/css"
 		},{
 			"name": "fullcalendar.js",
-			"version": "2.6.1",
-			"url": "fullcalendarcomponent/fullcalendar/lib/fullcalendar.2.6.1.min.js",
+			"version": "2.9.1",
+			"url": "fullcalendarcomponent/fullcalendar/lib/fullcalendar.min.js",
 			"mimetype": "text/javascript"
 		},{
 			"name": "gcal.js",
-			"version": "2.6.1",
+			"version": "2.9.1",
 			"url": "fullcalendarcomponent/fullcalendar/lib/gcal.js",
 			"mimetype": "text/javascript"
 		},{
 			"name": "fullcalendar.lang.js",
-			"version": "2.6.1",
+			"version": "2.9.1",
 			"url": "fullcalendarcomponent/fullcalendar/lang/lang-all.js",
 			"mimetype": "text/javascript"
 		}],
