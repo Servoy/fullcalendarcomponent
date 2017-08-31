@@ -474,7 +474,7 @@
         	"dayNamesShort": {"type" :"string[]"},
         	"displayEventEnd": {"type" :"boolean"},
         	"displayEventTime": {"type" :"boolean"},
-        	"dayPopoverFormat ": {"type" :"string"},
+        	"dayPopoverFormat": {"type" :"string"},
         	"dragOpacity": {"type" :"float"},
         	"dragRevertDuration": {"type" :"int"},
         	"dragScroll": {"type" :"boolean"},
