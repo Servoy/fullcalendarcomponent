@@ -249,8 +249,8 @@ function onLoad(event) {
 		selectable: false,
 		editable: false,
 		defaultView: fullCalendar.CALENDAR_VIEW_TYPE.MONTH,
-//		contentHeight: 'auto',
-//		height: 'auto',
+		contentHeight: 'auto',
+		height: 'auto',
 		aspectRatio: 2,
 		columnFormat: {
 			month: 'dd',
@@ -1010,7 +1010,7 @@ function testEventSource() {
 		editable: false,
 		defaultView: scopes.svyFullCalendar.CALENDAR_VIEW_TYPE.MONTH,
 		header: false,
-//		contentHeight: 'auto',
+		contentHeight: 'auto',
 		aspectRatio: 2,
 		columnFormat: {
 			month: 'dd',
@@ -1027,7 +1027,7 @@ function testEventSource() {
 		editable: false,
 		defaultView: scopes.svyFullCalendar.CALENDAR_VIEW_TYPE.MONTH,
 		header: false,
-//		contentHeight: 'auto',
+		contentHeight: 'auto',
 		aspectRatio: 2,
 		columnFormat: {
 			month: 'dd',

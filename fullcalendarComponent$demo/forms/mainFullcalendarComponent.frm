@@ -43,7 +43,7 @@ typeid:16,
 uuid:"DF45690A-7DD9-477E-9F61-4422C5335F93"
 }
 ],
-name:"main",
+name:"mainFullcalendarComponent",
 navigatorID:"-1",
 showInMenu:true,
 typeid:3,

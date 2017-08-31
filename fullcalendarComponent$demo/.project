@@ -3,7 +3,7 @@
 	<name>fullcalendarComponent$demo</name>
 	<comment></comment>
 	<projects>
-		<project>fullcalendar_resources</project>
+		<project>resources</project>
 		<project>fullcalendar_localhost_resources</project>
 		<project>mod_dialog</project>
 		<project>svyFullCalendar$model</project>
