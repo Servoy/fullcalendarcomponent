@@ -22,6 +22,8 @@ angular.module('svyFullcalendar', ['servoy']).directive('svyFullcalendar', funct
 				 *
 				 * */
 
+				// TODO fix event update. Updating an event linked to an eventSource, doesn't remove the event when the eventSource is removed
+				
 				// TODO Text/Time customization properties
 				// TODO Timezone, TimezoneParam, endParam, startParam
 
@@ -263,7 +265,7 @@ angular.module('svyFullcalendar', ['servoy']).directive('svyFullcalendar', funct
 
 				eventResize = function(event, delta, revertFunc, jsEvent, ui, view) {
 					if ($scope.handlers.onEventResizeMethodID) {
-						var retValue = $scope.handlers.onEventResizeMethodID(stringifyEvent(event), delta, jsEvent, stringifyView(view))
+						var retValue = $scope.handlers.onEventResizeMethodID(stringifyEvent(event), delta.asMilliseconds(), jsEvent, stringifyView(view))
 						retValue.then(function(success) {
 								if (success === false) {
 									revertFunc();
@@ -277,7 +279,7 @@ angular.module('svyFullcalendar', ['servoy']).directive('svyFullcalendar', funct
 
 				eventDrop = function(event, delta, revertFunc, jsEvent, ui, view) {
 					if ($scope.handlers.onEventDropMethodID) {
-						var retValue = $scope.handlers.onEventDropMethodID(stringifyEvent(event), delta, jsEvent, stringifyView(view))
+						var retValue = $scope.handlers.onEventDropMethodID(stringifyEvent(event), delta.asMilliseconds(), jsEvent, stringifyView(view))
 						retValue.then(function(success) {
 								if (success === false) {
 									revertFunc();
@@ -778,13 +780,13 @@ angular.module('svyFullcalendar', ['servoy']).directive('svyFullcalendar', funct
 				
 			},
 			link: function($scope, $element, $attrs) {
-
+				
 				// re-render fullcalendar
-				$scope.$watch("model.calendarOptions", function(newValue, oldValue) {
+				$scope.$watch("model.hasToDraw", function(newValue, oldValue) {
 						// another possible solution would be to collect options and resources in a single object from a Server side API.
 						// console.log("watch calendarOptions hasToDraw " + $scope.model.hasToDraw + " -> " + false);
 
-						if (newValue) {
+						if (newValue === true || oldValue === false) {
 							$scope.initFullCalendar();
 							// reset hasToDraw option
 							$scope.$evalAsync(function() {
@@ -793,6 +795,22 @@ angular.module('svyFullcalendar', ['servoy']).directive('svyFullcalendar', funct
 							});
 						}
 					});
+
+				// Deprecated by model.hasToDraw
+//				// re-render fullcalendar
+//				$scope.$watch("model.calendarOptions", function(newValue, oldValue) {
+//						// another possible solution would be to collect options and resources in a single object from a Server side API.
+//						console.log("watch calendarOptions hasToDraw " + $scope.model.hasToDraw + " -> " + false);
+//
+//						if (newValue) {
+//							$scope.initFullCalendar();
+//							// reset hasToDraw option
+//							$scope.$evalAsync(function() {
+//								$scope.model.hasToDraw = false;
+//								$scope.svyServoyapi.apply("hasToDraw");
+//							});
+//						}
+//					});
 
 				// check if eventSources is added
 				$scope.$watch("model.calendarOptions.eventSources.length", function(newValue, oldValue) {

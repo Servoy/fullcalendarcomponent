@@ -84,20 +84,20 @@ var googleCalendarFeed = {
  */
 var evnts = [{
 		title: "All day event",
-		start: new scopes.svyDateUtils.DateTime().addDays(-2).date,
+		start: scopes.svyDateUtils.addDays(new Date(), -2),
 		editable: true,
 		rendering : 'background-inverse'
 
 	}, {
 		title: "2 day event",
-		start: new scopes.svyDateUtils.DateTime().toStartOfDay().date,
-		end: new scopes.svyDateUtils.DateTime().toEndOfDay().addDays(1).date,
+		start: scopes.svyDateUtils.toStartOfDay(new Date()),
+		end: new scopes.svyDateUtils.toEndOfDay(scopes.svyDateUtils.addDays(new Date(), 1)),
 		allDay: true,
 		editable: true
 	}, {
 		title: "lunch event",
-		start: new scopes.svyDateUtils.DateTime().toStartOfDay().addHours(12).date,
-		end: new scopes.svyDateUtils.DateTime().toStartOfDay().addHours(13).date,
+		start: scopes.svyDateUtils.toStartOfDay(scopes.svyDateUtils.addHours(new Date(), 12)),
+		end: scopes.svyDateUtils.toStartOfDay(scopes.svyDateUtils.addHours(new Date(), 13)),
 		allDay: false,
 		editable: true,
 		rendering : 'background'
@@ -113,20 +113,19 @@ var evnts1 = {
 	id : "array1",
 	events: [{
 		title: "All day event",
-		start: new scopes.svyDateUtils.DateTime().addDays(-2).date,
+		start: scopes.svyDateUtils.addDays(new Date(), -2),
 		editable: true,
 		rendering : 'background'
-
 	}, {
 		title: "2 day event",
-		start: new scopes.svyDateUtils.DateTime().toStartOfDay().date,
-		end: new scopes.svyDateUtils.DateTime().toEndOfDay().addDays(1).date,
+		start: scopes.svyDateUtils.toStartOfDay(new Date()),
+		end: new scopes.svyDateUtils.toEndOfDay(scopes.svyDateUtils.addDays(new Date(), 1)),
 		allDay: true,
 		editable: true
 	}, {
 		title: "lunch event",
-		start: new scopes.svyDateUtils.DateTime().toStartOfDay().addHours(12).date,
-		end: new scopes.svyDateUtils.DateTime().toStartOfDay().addHours(13).date,
+		start: scopes.svyDateUtils.toStartOfDay(scopes.svyDateUtils.addHours(new Date(), 12)),
+		end: scopes.svyDateUtils.toStartOfDay(scopes.svyDateUtils.addHours(new Date(), 13)),
 		allDay: false,
 		editable: true,
 		rendering : 'background'
@@ -143,8 +142,8 @@ var evnts2 = {
 	id : "array2",
 	events: [{
 		title: "lunch event",
-		start: new scopes.svyDateUtils.DateTime().toStartOfDay().addDays(1).addHours(12).date,
-		end: new scopes.svyDateUtils.DateTime().toStartOfDay().addDays(1).addHours(13).date,
+		start: scopes.svyDateUtils.toStartOfDay(scopes.svyDateUtils.addHours(new Date(), 12)),
+		end: scopes.svyDateUtils.toStartOfDay(scopes.svyDateUtils.addHours(new Date(), 13)),
 		allDay: false,
 		editable: true
 	}],
@@ -250,8 +249,8 @@ function onLoad(event) {
 		selectable: false,
 		editable: false,
 		defaultView: fullCalendar.CALENDAR_VIEW_TYPE.MONTH,
-		contentHeight: 'auto',
-		height: 'auto',
+//		contentHeight: 'auto',
+//		height: 'auto',
 		aspectRatio: 2,
 		columnFormat: {
 			month: 'dd',
@@ -276,12 +275,12 @@ function onLoad(event) {
  * @properties={typeid:24,uuid:"74FF3A10-81F5-4C1C-9133-7869928463E6"}
  */
 function onShow(firstShow, event) {
-	var datasource = datasources.db.fullcalendar.event_object.getDatasource();
+	var datasource = datasources.db.fullcalendar.event_object.getDataSource();
 	scopes.svyEventManager.addListener(datasource, scopes.eventsHandler.EVENTS.EVENT_INSERT, onEventInsertListener)
 	scopes.svyEventManager.addListener(datasource, scopes.eventsHandler.EVENTS.EVENT_UPDATE, onEventUpdateListener)
 	scopes.svyEventManager.addListener(datasource, scopes.eventsHandler.EVENTS.EVENT_DELETE, onEventDeleteListener)
 
-	datasource = datasources.db.fullcalendar.resources.getDatasource();
+	datasource = datasources.db.fullcalendar.resources.getDataSource();
 	scopes.svyEventManager.addListener(datasource, scopes.eventsHandler.EVENTS.RESOURCE_ADD, onEventSourceAdd);
 	scopes.svyEventManager.addListener(datasource, scopes.eventsHandler.EVENTS.RESOURCE_UPDATE, onEventSourceUpdate);
 	scopes.svyEventManager.addListener(datasource, scopes.eventsHandler.EVENTS.RESOURCE_REMOVE, onEventSourceRemove);
@@ -294,12 +293,12 @@ function onShow(firstShow, event) {
  * @properties={typeid:24,uuid:"E9AFF989-703D-4D0D-91CF-407C86F2D727"}
  */
 function onHide(event) {
-	var datasource = datasources.db.fullcalendar.event_object.getDatasource();
+	var datasource = datasources.db.fullcalendar.event_object.getDataSource();
 	scopes.svyEventManager.removeListener(datasource, scopes.eventsHandler.EVENTS.EVENT_INSERT, onEventInsertListener)
 	scopes.svyEventManager.removeListener(datasource, scopes.eventsHandler.EVENTS.EVENT_UPDATE, onEventUpdateListener)
 	scopes.svyEventManager.removeListener(datasource, scopes.eventsHandler.EVENTS.EVENT_DELETE, onEventDeleteListener)
 
-	datasource = datasources.db.fullcalendar.resources.getDatasource();
+	datasource = datasources.db.fullcalendar.resources.getDataSource();
 	scopes.svyEventManager.removeListener(datasource, scopes.eventsHandler.EVENTS.RESOURCE_ADD, onEventSourceAdd);
 	scopes.svyEventManager.removeListener(datasource, scopes.eventsHandler.EVENTS.RESOURCE_ADD, onEventSourceUpdate);
 	scopes.svyEventManager.removeListener(datasource, scopes.eventsHandler.EVENTS.RESOURCE_REMOVE, onEventSourceRemove);
@@ -562,7 +561,7 @@ function getEvent(record) {
 		borderColor: record.border_color,
 		color : record.color,
 		backgroundColor: record.background_color,
-		textColor: record.text_color,
+		textColor: record.text_color
 	}
 	
 	if (utils.hasRecords(record, 'event_object_to_event_resources.event_resources_to_resources')) {
@@ -1011,7 +1010,7 @@ function testEventSource() {
 		editable: false,
 		defaultView: scopes.svyFullCalendar.CALENDAR_VIEW_TYPE.MONTH,
 		header: false,
-		contentHeight: 'auto',
+//		contentHeight: 'auto',
 		aspectRatio: 2,
 		columnFormat: {
 			month: 'dd',
@@ -1028,7 +1027,7 @@ function testEventSource() {
 		editable: false,
 		defaultView: scopes.svyFullCalendar.CALENDAR_VIEW_TYPE.MONTH,
 		header: false,
-		contentHeight: 'auto',
+//		contentHeight: 'auto',
 		aspectRatio: 2,
 		columnFormat: {
 			month: 'dd',

@@ -94,8 +94,9 @@ $scope.api.fullCalendar = function(options, renderOnCurrentView) {
 
 	// parse event sources
 	if (options) {
-		copy = { }
-		for (var property in options) {
+		copy = new Object();
+//		for (var property in options) {
+			var property = "eventSources";
 			if (property == "eventSources") {
 				var eventSources = options[property];
 				if (eventSources instanceof Array) {
@@ -115,17 +116,18 @@ $scope.api.fullCalendar = function(options, renderOnCurrentView) {
 							throw "Wrong events " + eventSource.events + " provided in eventSources.\nevents should be of type Function, Array<EventType> or URL feed.";
 						}
 					}
-				} else {
+				} else if (eventSources) {
 					throw "Wrong eventSources provided\neventSources should be of type Array.";
 				}
 			}
 			
-			// copy property
-			copy[property] = options[property];
-		}
+//			// copy property
+//			copy[property] = options[property];
+//		}
 	}
 	// update model properties;
-	$scope.model.calendarOptions = copy;
+//	$scope.model.calendarOptions = copy; // no more needed in Servoy 8.2
+	$scope.model.calendarOptions = options;
 	$scope.model.functionEventSources = functionEventSources;
 	$scope.model.arrayEventSources = arrayEventSources;
 	$scope.model.gcalEventSources = gcalEventSources;

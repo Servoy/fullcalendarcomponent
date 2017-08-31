@@ -339,7 +339,7 @@
 			"start": "date",
 			"end": "date",
 			"allDay" : "boolean",
-			"className" : "string[]",
+			"className" : "object",
 			"editable" : "boolean",
 			"startEditable" : "boolean",
 			"durationEditable" : "boolean",
@@ -350,7 +350,7 @@
 			"backgroundColor": "color",
 			"borderColor": "color",
 			"textColor" : "color",
-			"resourceIds" : "object[]",
+			"resourceIds" : "object",
 			"data" : "object"
 	 	},
 	 	"ResourceType": {
