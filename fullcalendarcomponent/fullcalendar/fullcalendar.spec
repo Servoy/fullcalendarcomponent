@@ -27,7 +27,7 @@
 		},{
 			"name": "fullcalendar.lang.js",
 			"version": "2.9.1",
-			"url": "fullcalendarcomponent/fullcalendar/lang/lang-all.js",
+			"url": "fullcalendarcomponent/fullcalendar/lib/locale-all.js",
 			"mimetype": "text/javascript"
 		}],
 	"version": 1,
@@ -515,11 +515,14 @@
 			"slotEventOverlap": {"type" :"boolean"},
 			"snapDuration": {"type" :"string"},
 			"timeFormat": {"type" :"object"},
-			"titleFormat": {"type" :"object"},
 			"weekends": {"type" :"boolean"},
 			"weekNumbers": {"type" :"boolean"},
 			"weekNumberCalculation": {"type" :"string"},
 			"weekNumberTitle": {"type" :"string"},
+						
+			"month": {"type" :"object"},
+			"week": {"type" :"object"},
+			"day": {"type" :"object"},
 		
 			"resources" : {"type" :"ResourceType[]"},
 			"resourceAreaWidth" : {"type" :"string"},

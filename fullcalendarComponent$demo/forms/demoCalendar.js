@@ -160,6 +160,11 @@ var evnts2 = {
  * @properties={typeid:24,uuid:"249A635F-D679-4136-B390-91D197B71089"}
  */
 function onLoad(event) {
+	/* 
+	 * 3.5 Changes:
+	 * Title Format from titleFormat {month, week, day} to month {}, week {}, day {}
+	 * */
+	
 	var fullCalendar = scopes.svyFullCalendar;
 	calendar = elements.fullcalendar_1;
 	
@@ -207,11 +212,11 @@ function onLoad(event) {
 				end: '20:00:00',
 				dow: [1,2,3,4,5,6]
 			},
-			columnFormat: {
-				month: 'ddd',
-				week: 'ddd M/D',
-				day: 'dddd M/D'
-			},
+//			columnFormat: {
+//				month: 'ddd',
+//				week: 'ddd M/D',
+//				day: 'dddd M/D'
+//			},
 			dayNamesShort : dayNamesShort,
 			defaultDate : new Date(2016, 4, 1),
 			defaultView: fullCalendar.CALENDAR_VIEW_TYPE.AGENDAWEEK,
@@ -234,10 +239,22 @@ function onLoad(event) {
 //				agenda: 'h:mm',
 //				'': 'h(:mm)t'
 //			},
-			titleFormat: {
-				month: 'MMMM YYYY',
-				week: 'MMMM D YYYY',
-				day: 'MMMM D YYYY'
+//			titleFormat: {
+//				month: 'MMMM YYYY',
+//				week: 'MMMM D YYYY',
+//				day: 'MMMM D YYYY'
+//			},
+			month : {
+				columnFormat: 'dd',
+				titleFormat: 'MMMM YYYY'
+			},
+			week : {
+				columnFormat: 'ddd M/d',
+				titleFormat: 'MMMM D YYYY'
+			},
+			day : {
+				columnFormat: 'dddd M/d',
+				titleFormat: 'MMMM D YYYY'
 			},
 			weekends: true
 		};
@@ -252,10 +269,14 @@ function onLoad(event) {
 		contentHeight: 'auto',
 		height: 'auto',
 		aspectRatio: 2,
-		columnFormat: {
-			month: 'dd',
-			week: 'ddd M/d',
-			day: 'dddd M/d'
+		month : {
+			columnFormat: 'dd'
+		},
+		week : {
+			columnFormat: 'ddd M/d'
+		},
+		day : {
+			columnFormat: 'dddd M/d'
 		},
 		header: {
 			right: 'prev,next',
