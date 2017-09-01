@@ -1001,7 +1001,7 @@ function gotoNoonTime() {
  * 
  * @properties={typeid:24,uuid:"1A38BF8B-E986-4674-A57D-EED0C23D8340"}
  */
-function testEventSource() {
+function ngTestEventSource() {
 	var eventSources = getActiveEventSources();
 	
 	elements.fullcalendarSelector.fullCalendar({
@@ -1044,7 +1044,7 @@ function testEventSource() {
  * 
  * @properties={typeid:24,uuid:"F677D682-6C30-429E-9BA3-FDD3FAEBBEE2"}
  */
-function testAddEventSource() {
+function ngTestAddEventSource() {
 	var eventSources = getActiveEventSources();
 	elements.fullcalendarSelector.addEventSource(eventSources[1])
 }
