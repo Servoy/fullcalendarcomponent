@@ -442,7 +442,8 @@
 	  		"start": "date",
 	  		"end": "date",
 	  		"intervalStart": "date",
-	 		"intervalEnd": "date"
+	 		"intervalEnd": "date",
+	 		"defaultDate": {"type": "date", "tags": {"scope" : "private"}}
         },
         "Header": {
         	"left": "string",

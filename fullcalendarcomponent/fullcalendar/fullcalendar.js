@@ -360,7 +360,7 @@ angular.module('svyFullcalendar', ['servoy']).directive('svyFullcalendar', funct
 
 				function parseMoment(m) {
 					// log(m.toDate().toUTCString().replace(" GMT", ""))
-					return m.toDate().getTime();//.toUTCString().replace(" GMT", ""); //m.toDate();
+					return m.toDate()//.getTime();//.toUTCString().replace(" GMT", ""); //m.toDate();
 					//return m.toDate().toUTCString().replace(" GMT", ""); //m.toDate();
 				}
 
