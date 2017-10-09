@@ -313,7 +313,6 @@ function onHide(event) {
 function onEventInsertListener(eventManager) {
 	/** @type {svy-fullcalendar.EventType} */
 	var eventObject = getEvent(eventManager.data);
-	
 	log.debug('insert event - ' + eventObject);
 	calendar.renderEvent(eventObject);
 }
@@ -466,7 +465,6 @@ function getActiveEventSources() {
  * @AllowToRunInFind
  */
 function resourceEventSourceCallback(start, end, params) {
-
 	/** @type {JSFoundSet<db:/fullcalendar/event_object>} */
 	var fs = databaseManager.getFoundSet("db:/fullcalendar/event_object");
 
@@ -657,8 +655,8 @@ function onCalendarSelect(start, end, event, viewObject, resource) {
 	
 	/** @type {Object} */
 	var eventObject = {
-		start: new Date(start),
-		end: new Date(end)
+		start: start,
+		end: end
 	};
 	
 	// is an allDay event if is of exactly 24h
@@ -975,7 +973,7 @@ function updateUI(event) {
  * @properties={typeid:24,uuid:"AF4DE5E0-A45B-4A9A-AABD-053DB2CA13CB"}
  */
 function onDayClickSelector(date, event, view, resource) {
-	calendar.gotoDate(new Date(date));
+	calendar.gotoDate(date);
 }
 
 /**

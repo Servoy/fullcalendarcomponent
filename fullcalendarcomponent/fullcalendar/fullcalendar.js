@@ -622,6 +622,8 @@ angular.module('svyFullcalendar', ['servoy']).directive('svyFullcalendar', funct
 							throw 'something went wrong'
 						}
 					}
+					
+					return true;
 				}
 
 				/**

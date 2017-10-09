@@ -279,6 +279,7 @@
                                 "type":"boolean",
                                 "optional": true
                              }],
+                    "returns" : "boolean",
                     "delayUntilFormLoad": true         
              },
             "updateEvent": {
@@ -466,7 +467,7 @@
         	"businessHours": {"type" :"BusinessHours"},
         	"buttonText": {"type" :"object"},
         	"columnFormat": {"type" :"object"},
-        	"contentHeight": {"type" :"int"},
+        	"contentHeight": {"type" :"object"},
         	"defaultAllDayEventDuration": {"type" :"object"},
         	"defaultTimedEventDuration": {"type" :"string"},
         	"defaultDate": {"type" :"date"},
