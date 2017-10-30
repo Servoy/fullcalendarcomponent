@@ -6,7 +6,7 @@
 	"serverscript": "fullcalendarcomponent/fullcalendar/fullcalendar_server.js",
 	"libraries": [{ 
 			"name":"moment", 
-			"version":"3.0.0", 
+			"version":"2.19.1", 
 			"url": "fullcalendarcomponent/fullcalendar/lib/moment.min.js", 
 			"mimetype":"text/javascript"
 		},{
