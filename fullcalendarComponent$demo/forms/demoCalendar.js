@@ -229,17 +229,19 @@ function onLoad(event) {
 			nowIndicator: true,
 			scrollTime: "8:00:00",
 			selectable: true,
+			slotLabelFormat : "H(:mm)",
 //			selectConstraint: 'businessHours',
-//			timeFormat: {
-//				agenda: 'h:mm',
-//				'': 'h(:mm)t'
-//			},
 			titleFormat: {
 				month: 'MMMM YYYY',
 				week: 'MMMM D YYYY',
 				day: 'MMMM D YYYY'
 			},
-			weekends: true
+			weekends: true,
+			views: {
+				agenda: {
+					slotLabelFormat: 'H(:mm)'
+				}
+			}
 		};
 	calendar.fullCalendar(options);
 	
