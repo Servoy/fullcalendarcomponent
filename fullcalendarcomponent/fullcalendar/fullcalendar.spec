@@ -522,6 +522,7 @@
 			"weekNumbers": {"type" :"boolean"},
 			"weekNumberCalculation": {"type" :"string"},
 			"weekNumberTitle": {"type" :"string"},
+			"views": { "type" : "object"},
 		
 			"resources" : {"type" :"ResourceType[]"},
 			"resourceAreaWidth" : {"type" :"string"},
