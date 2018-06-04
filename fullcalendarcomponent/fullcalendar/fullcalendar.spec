@@ -464,7 +464,7 @@
         	"allDaySlot": {"type" :"boolean"},
         	"allDayDefault": {"type" :"boolean"},
         	"aspectRatio": {"type" :"double"},
-        	"businessHours": {"type" :"BusinessHours"},
+        	"businessHours": {"type" :"BusinessHours[]"},
         	"buttonText": {"type" :"object"},
         	"columnFormat": {"type" :"object"},
         	"contentHeight": {"type" :"object"},

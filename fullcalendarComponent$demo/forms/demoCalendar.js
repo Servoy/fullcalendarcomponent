@@ -202,11 +202,11 @@ function onLoad(event) {
 	var options = {
 			allDayText: '',
 			lang: 'en',
-			businessHours: {
+			businessHours: [{
 				start: '09:00:00',
 				end: '20:00:00',
 				dow: [1,2,3,4,5,6]
-			},
+			}],
 			columnFormat: {
 				month: 'ddd',
 				week: 'ddd M/D',
@@ -1181,4 +1181,30 @@ function updateMenuSelection(itemIndex, parentIndex, isSelected, parentText, men
  */
 function updateCalendarOption(option, value) {
 	calendar.updateFullCalendar(option, value);
+}
+
+/**
+ * Perform the element default action.
+ *
+ * @param {JSEvent} event the event that triggered the action
+ *
+ * @protected
+ *
+ * @properties={typeid:24,uuid:"86C494F8-B9B5-4DD9-8FE4-969B789F4F40"}
+ */
+function onUpdateBusinessHours(event) {
+	var value = [ 
+	  {
+		    dow: [ 1, 2, 3 ],
+		    start: '08:00',
+		    end: '18:00'
+		  },
+		  {
+		    dow: [ 4, 5 ], 
+		    start: '10:00', 
+		    end: '16:00'
+		  }
+		]
+	
+	calendar.updateFullCalendar('businessHours', value);
 }
