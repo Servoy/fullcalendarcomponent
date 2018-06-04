@@ -6,27 +6,27 @@
 	"serverscript": "fullcalendarcomponent/fullcalendar/fullcalendar_server.js",
 	"libraries": [{ 
 			"name":"moment", 
-			"version":"2.13.0", 
+			"version":"2.19.1", 
 			"url": "fullcalendarcomponent/fullcalendar/lib/moment.min.js", 
 			"mimetype":"text/javascript"
 		},{
 			"name": "fullcalendar.css",
-			"version": "3.5.0",
+			"version": "2.9.1",
 			"url": "fullcalendarcomponent/fullcalendar/lib/fullcalendar.min.css",
 			"mimetype": "text/css"
 		},{
 			"name": "fullcalendar.js",
-			"version": "3.5.0",
+			"version": "2.9.1",
 			"url": "fullcalendarcomponent/fullcalendar/lib/fullcalendar.min.js",
 			"mimetype": "text/javascript"
 		},{
 			"name": "gcal.js",
-			"version": "3.5.0",
+			"version": "2.9.1",
 			"url": "fullcalendarcomponent/fullcalendar/lib/gcal.js",
 			"mimetype": "text/javascript"
 		},{
 			"name": "fullcalendar.lang.js",
-			"version": "3.5.0",
+			"version": "2.9.1",
 			"url": "fullcalendarcomponent/fullcalendar/lang/lang-all.js",
 			"mimetype": "text/javascript"
 		}],
@@ -522,7 +522,6 @@
 			"weekNumbers": {"type" :"boolean"},
 			"weekNumberCalculation": {"type" :"string"},
 			"weekNumberTitle": {"type" :"string"},
-			"views": { "type" : "object"},
 		
 			"resources" : {"type" :"ResourceType[]"},
 			"resourceAreaWidth" : {"type" :"string"},
