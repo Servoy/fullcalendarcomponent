@@ -1,6 +1,6 @@
 firstFormID:"93E6CD28-DB43-4FB2-8656-2718C61D613B",
 i18nDataSource:"db:/fullcalendar/tbl_i18n",
-modulesNames:"svyUtils,svyFullCalendar$model",
+modulesNames:"svyFullCalendar$model,svyUtils",
 onDataBroadcastMethodID:"-1",
 styleSheetID:"E088D1D3-B6CF-4706-BF9B-E23A7858097E",
 typeid:43,

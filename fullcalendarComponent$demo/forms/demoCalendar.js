@@ -160,11 +160,6 @@ var evnts2 = {
  * @properties={typeid:24,uuid:"249A635F-D679-4136-B390-91D197B71089"}
  */
 function onLoad(event) {
-	/* 
-	 * 3.5 Changes:
-	 * Title Format from titleFormat {month, week, day} to month {}, week {}, day {}
-	 * */
-	
 	var fullCalendar = scopes.svyFullCalendar;
 	calendar = elements.fullcalendar_1;
 	
@@ -212,13 +207,13 @@ function onLoad(event) {
 				end: '20:00:00',
 				dow: [1,2,3,4,5,6]
 			},
-//			columnFormat: {
-//				month: 'ddd',
-//				week: 'ddd M/D',
-//				day: 'dddd M/D'
-//			},
+			columnFormat: {
+				month: 'ddd',
+				week: 'ddd M/D',
+				day: 'dddd M/D'
+			},
 			dayNamesShort : dayNamesShort,
-			defaultDate : new Date(2016, 4, 1),
+			defaultDate : new Date(2016, 3, 27),
 			defaultView: fullCalendar.CALENDAR_VIEW_TYPE.AGENDAWEEK,
 			editable: true,
 			eventSources : eventSources,
@@ -234,34 +229,25 @@ function onLoad(event) {
 			nowIndicator: true,
 			scrollTime: "8:00:00",
 			selectable: true,
-			selectConstraint: 'businessHours',
-//			timeFormat: {
-//				agenda: 'h:mm',
-//				'': 'h(:mm)t'
-//			},
-//			titleFormat: {
-//				month: 'MMMM YYYY',
-//				week: 'MMMM D YYYY',
-//				day: 'MMMM D YYYY'
-//			},
-			month : {
-				columnFormat: 'dd',
-				titleFormat: 'MMMM YYYY'
+			slotLabelFormat : "H(:mm)",
+//			selectConstraint: 'businessHours',
+			titleFormat: {
+				month: 'MMMM YYYY',
+				week: 'MMMM D YYYY',
+				day: 'MMMM D YYYY'
 			},
-			week : {
-				columnFormat: 'ddd M/d',
-				titleFormat: 'MMMM D YYYY'
-			},
-			day : {
-				columnFormat: 'dddd M/d',
-				titleFormat: 'MMMM D YYYY'
-			},
-			weekends: true
+			weekends: true,
+			views: {
+				agenda: {
+					slotLabelFormat: 'H(:mm)'
+				}
+			}
 		};
 	calendar.fullCalendar(options);
 	
 	// init the calendar in the left pane for date selection
 	elements.fullcalendarSelector.fullCalendar({
+		defaultDate : new Date(2016, 3, 27),
 		firstDay: 1,
 		selectable: false,
 		editable: false,
@@ -269,14 +255,10 @@ function onLoad(event) {
 		contentHeight: 'auto',
 		height: 'auto',
 		aspectRatio: 2,
-		month : {
-			columnFormat: 'dd'
-		},
-		week : {
-			columnFormat: 'ddd M/d'
-		},
-		day : {
-			columnFormat: 'dddd M/d'
+		columnFormat: {
+			month: 'dd',
+			week: 'ddd M/d',
+			day: 'dddd M/d'
 		},
 		header: {
 			right: 'prev,next',
@@ -334,7 +316,6 @@ function onHide(event) {
 function onEventInsertListener(eventManager) {
 	/** @type {svy-fullcalendar.EventType} */
 	var eventObject = getEvent(eventManager.data);
-	
 	log.debug('insert event - ' + eventObject);
 	calendar.renderEvent(eventObject);
 }
@@ -487,7 +468,6 @@ function getActiveEventSources() {
  * @AllowToRunInFind
  */
 function resourceEventSourceCallback(start, end, params) {
-
 	/** @type {JSFoundSet<db:/fullcalendar/event_object>} */
 	var fs = databaseManager.getFoundSet("db:/fullcalendar/event_object");
 
@@ -521,6 +501,7 @@ function resourceEventSourceCallback(start, end, params) {
 		var event = getEvent(record);
 		retval.push(event)
 	}
+	
 	return retval;
 }
 
@@ -678,8 +659,8 @@ function onCalendarSelect(start, end, event, viewObject, resource) {
 	
 	/** @type {Object} */
 	var eventObject = {
-		start: new Date(start),
-		end: new Date(end)
+		start: start,
+		end: end
 	};
 	
 	// is an allDay event if is of exactly 24h
@@ -996,7 +977,7 @@ function updateUI(event) {
  * @properties={typeid:24,uuid:"AF4DE5E0-A45B-4A9A-AABD-053DB2CA13CB"}
  */
 function onDayClickSelector(date, event, view, resource) {
-	calendar.gotoDate(new Date(date));
+	calendar.gotoDate(date);
 }
 
 /**
@@ -1022,7 +1003,7 @@ function gotoNoonTime() {
  * 
  * @properties={typeid:24,uuid:"1A38BF8B-E986-4674-A57D-EED0C23D8340"}
  */
-function testEventSource() {
+function ngTestEventSource() {
 	var eventSources = getActiveEventSources();
 	
 	elements.fullcalendarSelector.fullCalendar({
@@ -1065,7 +1046,7 @@ function testEventSource() {
  * 
  * @properties={typeid:24,uuid:"F677D682-6C30-429E-9BA3-FDD3FAEBBEE2"}
  */
-function testAddEventSource() {
+function ngTestAddEventSource() {
 	var eventSources = getActiveEventSources();
 	elements.fullcalendarSelector.addEventSource(eventSources[1])
 }

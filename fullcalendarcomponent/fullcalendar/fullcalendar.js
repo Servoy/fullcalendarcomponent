@@ -359,8 +359,18 @@ angular.module('svyFullcalendar', ['servoy']).directive('svyFullcalendar', funct
 				}
 
 				function parseMoment(m) {
+					// Should conver it to a timezone
+					// The calendar may return dates ambiguously timed (onDayClick e.g.) https://fullcalendar.io/docs/utilities/Moment/#ambiguously-timed
+					if (!m.hasTime() && m.isUTC()) {	// if there is no time the date may be ambigously timed.
+						var ambiguosDateTime = m.toDate();
+						return new Date(ambiguosDateTime.getUTCFullYear(), ambiguosDateTime.getUTCMonth(), ambiguosDateTime.getUTCDate())
+					} else {
+						return m.toDate();
+					}
+					
+				//	console.log(m.toDate())
 					// log(m.toDate().toUTCString().replace(" GMT", ""))
-					return m.toDate().getTime();//.toUTCString().replace(" GMT", ""); //m.toDate();
+					//return m.toDate()//.getTime();//.toUTCString().replace(" GMT", ""); //m.toDate();
 					//return m.toDate().toUTCString().replace(" GMT", ""); //m.toDate();
 				}
 
@@ -622,6 +632,8 @@ angular.module('svyFullcalendar', ['servoy']).directive('svyFullcalendar', funct
 							throw 'something went wrong'
 						}
 					}
+					
+					return true;
 				}
 
 				/**

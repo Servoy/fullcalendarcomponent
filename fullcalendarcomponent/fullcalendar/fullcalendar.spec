@@ -6,28 +6,28 @@
 	"serverscript": "fullcalendarcomponent/fullcalendar/fullcalendar_server.js",
 	"libraries": [{ 
 			"name":"moment", 
-			"version":"3.0.0", 
+			"version":"2.13.0", 
 			"url": "fullcalendarcomponent/fullcalendar/lib/moment.min.js", 
 			"mimetype":"text/javascript"
 		},{
 			"name": "fullcalendar.css",
-			"version": "2.9.1",
+			"version": "3.5.0",
 			"url": "fullcalendarcomponent/fullcalendar/lib/fullcalendar.min.css",
 			"mimetype": "text/css"
 		},{
 			"name": "fullcalendar.js",
-			"version": "2.9.1",
+			"version": "3.5.0",
 			"url": "fullcalendarcomponent/fullcalendar/lib/fullcalendar.min.js",
 			"mimetype": "text/javascript"
 		},{
 			"name": "gcal.js",
-			"version": "2.9.1",
+			"version": "3.5.0",
 			"url": "fullcalendarcomponent/fullcalendar/lib/gcal.js",
 			"mimetype": "text/javascript"
 		},{
 			"name": "fullcalendar.lang.js",
-			"version": "2.9.1",
-			"url": "fullcalendarcomponent/fullcalendar/lib/locale-all.js",
+			"version": "3.5.0",
+			"url": "fullcalendarcomponent/fullcalendar/lang/lang-all.js",
 			"mimetype": "text/javascript"
 		}],
 	"version": 1,
@@ -279,6 +279,7 @@
                                 "type":"boolean",
                                 "optional": true
                              }],
+                    "returns" : "boolean",
                     "delayUntilFormLoad": true         
              },
             "updateEvent": {
@@ -442,7 +443,8 @@
 	  		"start": "date",
 	  		"end": "date",
 	  		"intervalStart": "date",
-	 		"intervalEnd": "date"
+	 		"intervalEnd": "date",
+	 		"defaultDate": {"type": "date", "tags": {"scope" : "private"}}
         },
         "Header": {
         	"left": "string",
@@ -465,7 +467,7 @@
         	"businessHours": {"type" :"BusinessHours"},
         	"buttonText": {"type" :"object"},
         	"columnFormat": {"type" :"object"},
-        	"contentHeight": {"type" :"int"},
+        	"contentHeight": {"type" :"object"},
         	"defaultAllDayEventDuration": {"type" :"object"},
         	"defaultTimedEventDuration": {"type" :"string"},
         	"defaultDate": {"type" :"date"},
@@ -515,14 +517,12 @@
 			"slotEventOverlap": {"type" :"boolean"},
 			"snapDuration": {"type" :"string"},
 			"timeFormat": {"type" :"object"},
+			"titleFormat": {"type" :"object"},
 			"weekends": {"type" :"boolean"},
 			"weekNumbers": {"type" :"boolean"},
 			"weekNumberCalculation": {"type" :"string"},
 			"weekNumberTitle": {"type" :"string"},
-						
-			"month": {"type" :"object"},
-			"week": {"type" :"object"},
-			"day": {"type" :"object"},
+			"views": { "type" : "object"},
 		
 			"resources" : {"type" :"ResourceType[]"},
 			"resourceAreaWidth" : {"type" :"string"},
