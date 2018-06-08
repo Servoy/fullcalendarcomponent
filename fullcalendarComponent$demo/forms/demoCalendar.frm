@@ -9,7 +9,7 @@ uuid:"25823797-B496-41C8-9A14-60E9C8AA614B"
 {
 anchors:3,
 formIndex:5,
-location:"398,18",
+location:"370,18",
 onActionMethodID:"F72CF128-063C-4208-A982-BE0A3420D5FD",
 size:"32,26",
 text:"<span class=\"glyphicon glyphicon-repeat\"/>",
@@ -20,7 +20,7 @@ uuid:"274699C9-F56B-4478-B778-C19993E7C87E"
 {
 anchors:3,
 formIndex:7,
-location:"444,18",
+location:"416,18",
 name:"btnMonthView",
 onActionMethodID:"3ADDF19B-1251-43C1-8073-BAF083CEBDCF",
 size:"32,26",
@@ -33,7 +33,7 @@ uuid:"2AECF278-F8A3-4319-9263-D4E4CE5E0F02"
 {
 anchors:3,
 formIndex:8,
-location:"675,18",
+location:"647,18",
 onActionMethodID:"9C1A1D8C-8804-420F-96CE-E21690104148",
 size:"32,26",
 styleClass:"btn-calendar",
@@ -45,7 +45,7 @@ uuid:"2F940F52-9DEA-4487-A069-B30E35870641"
 {
 anchors:3,
 formIndex:6,
-location:"582,18",
+location:"554,18",
 onActionMethodID:"21FA66F7-5884-4A81-A31C-8D6805B21558",
 size:"32,26",
 styleClass:"btn-calendar",
@@ -57,7 +57,7 @@ uuid:"5FF096D3-F0CE-42D3-818B-AFE4EB8E3AA3"
 {
 anchors:3,
 formIndex:11,
-location:"476,18",
+location:"448,18",
 name:"btnAgendaWeekView",
 onActionMethodID:"347FC8A1-7327-4E49-B6D6-CDF1B3927A5F",
 size:"32,26",
@@ -142,7 +142,7 @@ uuid:"7E882E31-13CF-449D-BEA1-A0ACB0CDC629"
 {
 anchors:3,
 formIndex:9,
-location:"508,18",
+location:"480,18",
 name:"btnAgendaDayView",
 onActionMethodID:"660DB3BD-8EBD-4270-A9C6-335B2A5A333E",
 size:"32,26",
@@ -154,10 +154,10 @@ uuid:"8954C815-5DC1-40FF-A345-4ACB3103D8BC"
 {
 anchors:3,
 formIndex:1,
-location:"717,18",
+location:"689,18",
 onActionMethodID:"E46FC259-DCCD-413A-BF8C-4B07AD7749ED",
-size:"32,26",
-text:"<span class=\"glyphicon glyphicon-time\"/>",
+size:"45,26",
+text:"<span class=\"glyphicon glyphicon-time\"><\/span> AM",
 toolTipText:"Morning time",
 typeid:7,
 uuid:"A11A1841-CEDE-4F97-8955-F00943327F04"
@@ -165,11 +165,11 @@ uuid:"A11A1841-CEDE-4F97-8955-F00943327F04"
 {
 anchors:3,
 formIndex:2,
-location:"746,18",
+location:"732,18",
 onActionMethodID:"6232C540-C2F0-4392-9994-FAA6C468B0C7",
-size:"32,26",
+size:"45,26",
 styleClass:"btn-warning",
-text:"<span class=\"glyphicon glyphicon-time\"/>",
+text:"<span class=\"glyphicon glyphicon-time\"><\/span> PM",
 toolTipText:"Afternoon time",
 typeid:7,
 uuid:"AB985413-C40E-44B8-91AD-E88EB7F3605C"
@@ -189,7 +189,7 @@ uuid:"CE0353AB-7647-4F97-BC47-E959045A7668"
 {
 anchors:3,
 formIndex:4,
-location:"613,18",
+location:"585,18",
 onActionMethodID:"709C050D-3D22-4207-A6CD-F26C424DE285",
 size:"32,26",
 styleClass:"btn-calendar",
@@ -201,7 +201,7 @@ uuid:"DE52C2AD-4E09-454E-BC4B-7D7113D70B8A"
 {
 anchors:3,
 formIndex:3,
-location:"552,18",
+location:"524,18",
 onActionMethodID:"27F5E477-7982-424C-A9CB-746F274A8C2C",
 size:"32,26",
 styleClass:"btn-calendar",
@@ -213,7 +213,7 @@ uuid:"EDB4136C-B392-4EDE-A627-29A827BB779A"
 {
 anchors:3,
 formIndex:10,
-location:"644,18",
+location:"616,18",
 onActionMethodID:"4D921E5B-AD25-4392-A625-48295CD9DADC",
 size:"32,26",
 styleClass:"btn-calendar",
