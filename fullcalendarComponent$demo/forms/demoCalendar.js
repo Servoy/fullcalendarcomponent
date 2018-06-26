@@ -213,7 +213,7 @@ function onLoad(event) {
 				day: 'dddd M/D'
 			},
 			dayNamesShort : dayNamesShort,
-			defaultDate : new Date(2016, 4, 1),
+			defaultDate : new Date(2016, 3, 27),
 			defaultView: fullCalendar.CALENDAR_VIEW_TYPE.AGENDAWEEK,
 			editable: true,
 			eventSources : eventSources,
@@ -229,22 +229,25 @@ function onLoad(event) {
 			nowIndicator: true,
 			scrollTime: "8:00:00",
 			selectable: true,
-			selectConstraint: 'businessHours',
-//			timeFormat: {
-//				agenda: 'h:mm',
-//				'': 'h(:mm)t'
-//			},
+			slotLabelFormat : "H(:mm)",
+//			selectConstraint: 'businessHours',
 			titleFormat: {
 				month: 'MMMM YYYY',
 				week: 'MMMM D YYYY',
 				day: 'MMMM D YYYY'
 			},
-			weekends: true
+			weekends: true,
+			views: {
+				agenda: {
+					slotLabelFormat: 'H(:mm)'
+				}
+			}
 		};
 	calendar.fullCalendar(options);
 	
 	// init the calendar in the left pane for date selection
 	elements.fullcalendarSelector.fullCalendar({
+		defaultDate : new Date(2016, 3, 27),
 		firstDay: 1,
 		selectable: false,
 		editable: false,
@@ -498,6 +501,7 @@ function resourceEventSourceCallback(start, end, params) {
 		var event = getEvent(record);
 		retval.push(event)
 	}
+	
 	return retval;
 }
 

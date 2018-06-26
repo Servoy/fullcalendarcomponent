@@ -38,3 +38,13 @@ function getDescription() {
 function getIconStyleClass() {
 	return "fa fa-calendar"
 }
+
+/**
+*
+* @return {RuntimeForm<AbstractMicroSample>}
+*
+* @properties={typeid:24,uuid:"E3BD524E-575A-43D0-9F6E-73BF50F182AE"}
+*/
+function getParent() {
+	return forms.specializedSamples;
+}
