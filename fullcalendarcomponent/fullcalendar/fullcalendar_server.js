@@ -102,15 +102,16 @@ $scope.api.fullCalendar = function(options, renderOnCurrentView) {
 				if (eventSources instanceof Array) {
 					for (var i = 0; i < eventSources.length; i++) {
 						var eventSource = eventSources[i];
+						var eventSourceCopy = (servoyApi && servoyApi.copyObject) ? servoyApi.copyObject(eventSource): eventSource;
 						switch (getEventSourceType(eventSource)) {
 						case EVENTSOURCE_TYPE.FUNCTION_SOURCE:
-							functionEventSources.push(eventSource);
+							functionEventSources.push(eventSourceCopy);
 							break;
 						case EVENTSOURCE_TYPE.ARRAY_SOURCE:
-							arrayEventSources.push(eventSource);
+							arrayEventSources.push(eventSourceCopy);
 							break;
 						case EVENTSOURCE_TYPE.GCALENDAR_SOURCE:
-							gcalEventSources.push(eventSource);
+							gcalEventSources.push(eventSourceCopy);
 							break;
 						default:
 							throw "Wrong events " + eventSource.events + " provided in eventSources.\nevents should be of type Function, Array<EventType> or URL feed.";
