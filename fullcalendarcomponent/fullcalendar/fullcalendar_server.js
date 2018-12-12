@@ -102,7 +102,7 @@ $scope.api.fullCalendar = function(options, renderOnCurrentView) {
 				if (eventSources instanceof Array) {
 					for (var i = 0; i < eventSources.length; i++) {
 						var eventSource = eventSources[i];
-						var eventSourceCopy = eventSource; //(servoyApi && servoyApi.copyObject) ? servoyApi.copyObject(eventSource): eventSource;
+						var eventSourceCopy = (servoyApi && servoyApi.copyObject) ? servoyApi.copyObject(eventSource): eventSource;
 						switch (getEventSourceType(eventSource)) {
 						case EVENTSOURCE_TYPE.FUNCTION_SOURCE:
 							functionEventSources.push(eventSourceCopy);
