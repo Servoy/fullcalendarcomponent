@@ -56,7 +56,7 @@ a:focus {
 	padding: 0 3px;
 }
 
-/* grid rows */
+/* grid rows *
 .ui-grid-row-selected div.ui-grid-cell {
     background-color: transparent !important;
 }
@@ -65,7 +65,7 @@ a:focus {
 }
 .ui-grid-row:nth-child(even) .ui-grid-cell {
     background-color: transparent !important;
-}
+}*/
 
 /* servoy fields in table */
 .ui-grid-cell .svy-field, .ui-grid-cell .svy-calendar, .ui-grid-cell .svy-typeahead {
@@ -76,7 +76,7 @@ a:focus {
 
 /* calendar field in table */
 .ui-grid-cell .date {
-	padding-right: 3px;
+	/* padding-right: 3px; */
 }
 
 .ui-grid-cell .svy-calendar {
@@ -100,6 +100,14 @@ a:focus {
 	border-radius: 0px;
 	border-top: 0;
     border-right: 0;
+    background: inherit;
+}
+
+.ui-grid-row:hover .ui-grid-cell .btn-group-addon {
+    background: #FFF;
+}
+
+.ui-grid-row-selected:hover .ui-grid-cell .btn-group-addon {
     background: inherit;
 }
 
