@@ -93,6 +93,18 @@
 				 	"optional" : true
 				}]
 		},
+		"onDayRightClickMethodID": {
+			"parameters" : [{
+					"type": "date",
+				 	"name": "date"
+				 }, {
+				 	"type": "JSEvent",
+				 	"name": "event"
+				 }, {
+				 	"type": "ViewType",
+				 	"name": "view"
+				 }]
+		},
 		"onEventClickMethodID": {
 			"parameters" : [{
 					"type": "EventType",

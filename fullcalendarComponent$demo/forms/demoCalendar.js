@@ -146,6 +146,20 @@ var evnts2 = {
 		end: scopes.svyDateUtils.toStartOfDay(scopes.svyDateUtils.addHours(new Date(), 13)),
 		allDay: false,
 		editable: true
+	},{
+		title: "background event 1",
+		start: scopes.svyDateUtils.addHours(scopes.svyDateUtils.toStartOfDay(new Date()), 9),
+		end: scopes.svyDateUtils.addHours(scopes.svyDateUtils.toStartOfDay(new Date()), 10),
+		allDay: false,
+		rendering: 'background',
+		textColor: 'black'
+	},{
+		title: "background event 2",
+		start: scopes.svyDateUtils.addHours(scopes.svyDateUtils.toStartOfDay(new Date()), 11),
+		end: scopes.svyDateUtils.addHours(scopes.svyDateUtils.toStartOfDay(new Date()), 12),
+		allDay: false,
+		rendering: 'background',
+		textColor: 'black'
 	}],
 	color: 'gray'
 };
@@ -213,7 +227,7 @@ function onLoad(event) {
 				day: 'dddd M/D'
 			},
 			dayNamesShort : dayNamesShort,
-			defaultDate : new Date(2016, 3, 27),
+			defaultDate : new Date(),
 			defaultView: fullCalendar.CALENDAR_VIEW_TYPE.AGENDAWEEK,
 			editable: true,
 			eventSources : eventSources,
@@ -229,6 +243,10 @@ function onLoad(event) {
 			nowIndicator: true,
 			scrollTime: "8:00:00",
 			selectable: true,
+
+			// New custom property
+			showBgEventTitle: true,
+			
 			slotLabelFormat : "H(:mm)",
 //			selectConstraint: 'businessHours',
 			titleFormat: {
@@ -690,6 +708,18 @@ function onDayClickMethodID(date, event, viewObject, resource) {
 	logEventHandler("DAY_CLICK",event,null,viewObject,resource)
 }
 
+/**
+ * @param {Date} date
+ * @param {JSEvent} event
+ * @param {CustomType<svy-fullcalendar.ViewType>} view
+ *
+ * @protected
+ *
+ * @properties={typeid:24,uuid:"B90F6BDB-9EDE-4A39-A41B-25C6FC0ADA36"}
+ */
+function onDayRightClick(date, event, view) {
+	logEventHandler("DAY_RIGHT_CLICK",event,null,view,null);
+}
 
 /**
  * fired at click on event
