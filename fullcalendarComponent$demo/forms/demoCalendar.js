@@ -183,6 +183,7 @@ function onLoad(event) {
 	// collect all eventSources
 	/** @type {Array<svy-fullcalendar.EventSourceType>} */
 	var eventSources = [];
+	var defaultDate = getDefaultDate();
 
 	// create an event source for any db resource
 	eventSources = eventSources.concat(getActiveEventSources());
@@ -227,7 +228,7 @@ function onLoad(event) {
 				day: 'dddd M/D'
 			},
 			dayNamesShort : dayNamesShort,
-			defaultDate : new Date(),
+			defaultDate : defaultDate,
 			defaultView: fullCalendar.CALENDAR_VIEW_TYPE.AGENDAWEEK,
 			editable: true,
 			eventSources : eventSources,
@@ -265,7 +266,7 @@ function onLoad(event) {
 	
 	// init the calendar in the left pane for date selection
 	elements.fullcalendarSelector.fullCalendar({
-		defaultDate : new Date(2016, 3, 27),
+		defaultDate : defaultDate,
 		firstDay: 1,
 		selectable: false,
 		editable: false,
@@ -712,12 +713,13 @@ function onDayClickMethodID(date, event, viewObject, resource) {
  * @param {Date} date
  * @param {JSEvent} event
  * @param {CustomType<svy-fullcalendar.ViewType>} view
+ * @param {CustomType<svy-fullcalendar.ResourceType>} resource
  *
  * @protected
  *
  * @properties={typeid:24,uuid:"B90F6BDB-9EDE-4A39-A41B-25C6FC0ADA36"}
  */
-function onDayRightClick(date, event, view) {
+function onDayRightClick(date, event, view, resource) {
 	logEventHandler("DAY_RIGHT_CLICK",event,null,view,null);
 }
 
@@ -1213,4 +1215,20 @@ function updateMenuSelection(itemIndex, parentIndex, isSelected, parentText, men
  */
 function updateCalendarOption(option, value) {
 	calendar.updateFullCalendar(option, value);
+}
+
+/**
+ * @return {Date}
+ * 
+ * @properties={typeid:24,uuid:"A0F203F8-8745-4872-998F-EC606AF97F49"}
+ */
+function getDefaultDate() {
+	var q = datasources.db.fullcalendar.event_object.createSelect();
+	q.result.add(q.columns.start_date.min);
+	
+	var ds = databaseManager.getDataSetByQuery(q, 1);
+	/** @type {Date} */
+	var defaultDate = ds.getMaxRowIndex() ? ds.getValue(1, 1) : new Date();
+	
+	return defaultDate;
 }
