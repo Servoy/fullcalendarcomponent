@@ -205,6 +205,23 @@ angular.module('svyFullcalendar', ['servoy']).directive('svyFullcalendar', funct
 						}
 					}
 					
+					// handle deprecated options
+					if (options.titleFormat) {
+						delete options.titleFormat;
+						log("Fullcalendar: options titleFormat has been deprecated. Set titleFormat in the specific views definition instead. See https://fullcalendar.io/docs/v3/view-specific-options", LOG_LEVEL.ERROR)
+					}
+					if (options.columnFormat) {
+						delete options.columnFormat;
+						log("Fullcalendar: options columnFormat has been deprecated. Use columnHeaderFormat in the specific views definition instead. See https://fullcalendar.io/docs/v3/view-specific-options", LOG_LEVEL.ERROR)
+					}
+					if (options.lang) {
+						if (!options.locale) {
+							options.locale = options.lang;
+						}
+						delete options.lang;
+						log("Fullcalendar: options lang has been deprecated; use locale instead", LOG_LEVEL.WARN)
+					}
+					
 					// If draw without calling constructor or renderOnCurrentView is set to true, use the persisteView to rerender
 					if ((!$scope.model.hasToDraw || $scope.model.renderOnCurrentView) && $scope.model.view) {
 						options.defaultView = $scope.model.view.name;
