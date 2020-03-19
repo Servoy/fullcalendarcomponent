@@ -3,12 +3,11 @@
 	<name>fullcalendarComponent$demo</name>
 	<comment></comment>
 	<projects>
-		<project>resources</project>
-		<project>fullcalendar_localhost_resources</project>
+		<project>fullcalendar_resources</project>
+		<project>fullcalendarcomponent</project>
 		<project>mod_dialog</project>
 		<project>svyFullCalendar$model</project>
 		<project>svyUtils</project>
-		<project>fullcalendarcomponent</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

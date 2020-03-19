@@ -3,8 +3,7 @@
 	<name>svyFullCalendar$model</name>
 	<comment></comment>
 	<projects>
-		<project>resources</project>
-		<project>fullcalendar_localhost_resources</project>
+		<project>fullcalendar_resources</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
