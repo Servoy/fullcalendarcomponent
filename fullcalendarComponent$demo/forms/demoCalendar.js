@@ -201,16 +201,11 @@ function onLoad(event) {
 	/** @type {svy-fullcalendar.FullCalendarOptions} */
 	var options = {
 			allDayText: '',
-			lang: 'en',
+			locale: 'en',
 			businessHours: {
 				start: '09:00:00',
 				end: '20:00:00',
 				dow: [1,2,3,4,5,6]
-			},
-			columnFormat: {
-				month: 'ddd',
-				week: 'ddd M/D',
-				day: 'dddd M/D'
 			},
 			dayNamesShort : dayNamesShort,
 			defaultDate : new Date(2016, 3, 27),
@@ -231,16 +226,21 @@ function onLoad(event) {
 			selectable: true,
 			slotLabelFormat : "H(:mm)",
 //			selectConstraint: 'businessHours',
-			titleFormat: {
-				month: 'MMMM YYYY',
-				week: 'MMMM D YYYY',
-				day: 'MMMM D YYYY'
-			},
 			weekends: true,
 			views: {
 				agenda: {
 					slotLabelFormat: 'H(:mm)'
-				}
+				},
+				month: {
+				      columnHeaderFormat : 'dddd'
+				},
+			    week: {
+				      columnHeaderFormat : 'dd M/D'
+			    },
+			    day: {
+				      titleFormat: 'dddd M/D',
+				      columnHeaderFormat : 'dddd M/D'
+			    }
 			}
 		};
 	calendar.fullCalendar(options);
@@ -255,11 +255,6 @@ function onLoad(event) {
 		contentHeight: 'auto',
 		height: 'auto',
 		aspectRatio: 2,
-		columnFormat: {
-			month: 'dd',
-			week: 'ddd M/d',
-			day: 'dddd M/d'
-		},
 		header: {
 			right: 'prev,next',
 			left: 'title'

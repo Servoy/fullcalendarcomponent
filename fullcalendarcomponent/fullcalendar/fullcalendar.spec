@@ -11,23 +11,23 @@
 			"mimetype":"text/javascript"
 		},{
 			"name": "fullcalendar.css",
-			"version": "2.9.1",
+			"version": "3.8.2",
 			"url": "fullcalendarcomponent/fullcalendar/lib/fullcalendar.min.css",
 			"mimetype": "text/css"
 		},{
 			"name": "fullcalendar.js",
-			"version": "2.9.1",
+			"version": "3.8.2",
 			"url": "fullcalendarcomponent/fullcalendar/lib/fullcalendar.min.js",
 			"mimetype": "text/javascript"
 		},{
 			"name": "gcal.js",
-			"version": "2.9.1",
+			"version": "3.8.2",
 			"url": "fullcalendarcomponent/fullcalendar/lib/gcal.js",
 			"mimetype": "text/javascript"
 		},{
 			"name": "fullcalendar.lang.js",
-			"version": "2.9.1",
-			"url": "fullcalendarcomponent/fullcalendar/lang/lang-all.js",
+			"version": "3.8.2",
+			"url": "fullcalendarcomponent/fullcalendar/lib/locale-all.js",
 			"mimetype": "text/javascript"
 		}],
 	"version": 1,
