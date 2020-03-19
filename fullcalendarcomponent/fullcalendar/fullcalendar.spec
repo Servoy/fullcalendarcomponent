@@ -103,7 +103,11 @@
 				 }, {
 				 	"type": "ViewType",
 				 	"name": "view"
-				 }]
+				 }, {
+				 	"type": "ResourceType",
+				 	"name": "resource",
+				 	"optional" : true
+				}]
 		},
 		"onEventClickMethodID": {
 			"parameters" : [{

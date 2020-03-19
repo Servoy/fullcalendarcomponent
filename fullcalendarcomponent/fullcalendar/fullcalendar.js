@@ -243,26 +243,58 @@ angular.module('svyFullcalendar', ['servoy']).directive('svyFullcalendar', funct
 					}
 				}
 
-				dayClick = function(date, jsEvent, view) {
+				dayClick = function(date, jsEvent, view, resource) {
 					if ($scope.handlers.onDayClickMethodID) {
-						$scope.handlers.onDayClickMethodID(parseMoment(date), jsEvent, stringifyView(view))
+						$scope.handlers.onDayClickMethodID(parseMoment(date), jsEvent, stringifyView(view), resource)
 					}
 				}
 
 				dayRightClick = function(jsEvent) {
-					if ($scope.handlers.onDayRightClickMethodID) {
-						jsEvent.preventDefault();
+					if (!$scope.handlers.onDayRightClickMethodID) {
+						return;
+					}
+					
+					// Click was done on an event, this should be ignored and let the onEventRightClick event handle it
+					if ($(jsEvent.target).closest('.fc-event').length) {
+						return;
+					}
+					
+					jsEvent.preventDefault();
 
-						var view = calendar.fullCalendar('getView');
-						view.prepareHits();
+					var view = calendar.fullCalendar('getView');
+					view.prepareHits();
 
-						var hit = view.queryHit(jsEvent.pageX, jsEvent.pageY);
-						var cell = hit ? view.getHitSpan(hit) : null;
-						var viewObject = $scope.model.view;
-
-						if (cell) {
-							$scope.handlers.onDayRightClickMethodID(parseMoment(cell.start), jsEvent, viewObject);
+					var hit = view.queryHit(jsEvent.pageX, jsEvent.pageY);
+					if (!hit) {
+						console.log('No Hit found in day right click event at (x, y): (' + jsEvent.pageX + ',' + jsEvent.pageY + ')');
+						return;
+					}
+					
+					var cell;
+					
+					// fullCalendar >= 2.5.0
+					if (view.getHitSpan instanceof Function) {
+						cell = view.getHitSpan(hit);
+					}
+					// fullCalendar >= 3.5.0:
+					else if (hit.row && hit.row.getCellRange) {
+						cell = hit.row.getCellRange(hit.row, hit.col);
+					}
+					else {
+						var footprint = hit.component.getSafeHitFootprint(hit);
+						
+						if (footprint) {
+							cell = view.calendar.footprintToDateProfile(footprint);
 						}
+					}
+					
+					if (cell) {
+						var resource = cell.resourceId ? calendar.fullCalendar('getResourceById', cell.resourceId) : null;
+						
+						$scope.handlers.onDayRightClickMethodID(parseMoment(cell.start), jsEvent, $scope.model.view, resource);
+					}
+					else {
+						console.log('No Cell found in day right click event at (x, y): (' + jsEvent.pageX + ',' + jsEvent.pageY + ')');
 					}
 				}
 				
@@ -352,12 +384,18 @@ angular.module('svyFullcalendar', ['servoy']).directive('svyFullcalendar', funct
 					
 					// bind right click to event
 					if ($scope.handlers.onEventRightClickMethodID) {
-						element.bind('contextmenu', { event: event }, eventRightClick);
+						if (event.rendering == 'background' && $scope.model.calendarOptions.skipBgEventRightClick) {
+							if ($scope.handlers.onDayRightClickMethodID) {
+								element.bind('contextmenu', { event: event }, dayRightClick);
+							}
+						}
+						else {
+							element.bind('contextmenu', { event: event }, eventRightClick);
+						}
 					}
-
+					
 					// showBgEventsTitle is a custom option defined when calendar is initialized
 					// fc-bg-title is a custom css class just to differentiate from fc-title
-					// FIXME is this the best way to do it? 
 					if (event.rendering == 'background' && event.title && $scope.model.calendarOptions.showBgEventTitle) {
 						element.append('<div class="fc-bg-title"><span>' + event.title + '</span></div>');
 
@@ -392,13 +430,17 @@ angular.module('svyFullcalendar', ['servoy']).directive('svyFullcalendar', funct
 
 						// Agenda View
 						if (element.hasClass('fc-agenda-view')) {
-							// Find all time cells excluding the ones that show the time
-							targetElements = element.find('.fc-slats .fc-widget-content:not(.fc-time)');
+							// Find all time cells excluding the ones that show the time, all-day section, non business hours section,
+							// it can include events but they will be filtered when dealing with the right click
+							targetElements = element.find('.fc-slats .fc-widget-content:not(.fc-time), .fc-day-grid .fc-bg .fc-day, .fc-day-grid .fc-content-skeleton, .fc-time-grid .fc-business-container');
 						}
 						// Month View
 						else if (element.hasClass('fc-month-view')) {
-							// Find all date cells, empty ones plus day header only when not empty
-							targetElements = element.find('.fc-bg, .fc-bgevent-skeleton, .fc-content-skeleton .fc-day-number');
+							// Find all date rows, it can include events but they will be filtered when dealing with the right click
+							targetElements = element.find('.fc-day-grid .fc-row');
+						}
+						else {
+							// TODO Add support for other views (List, Basic, Timeline, Vertical Resource)
 						}
 
 						if (targetElements) {
