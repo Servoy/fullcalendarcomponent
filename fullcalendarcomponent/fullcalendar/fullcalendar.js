@@ -386,7 +386,7 @@ angular.module('svyFullcalendar', ['servoy']).directive('svyFullcalendar', funct
 							// TODO should include the name of the sourceObject ??
 							break;
 						case "resourceId":
-							parsedEvent.resourceIds = [event[property]];
+							// parsedEvent.resourceIds = [event[property]];
 							break;
 						default:
 							// skip if is an internal property
@@ -402,6 +402,12 @@ angular.module('svyFullcalendar', ['servoy']).directive('svyFullcalendar', funct
 							break;
 						}
 					}
+					
+					// copy resourceId into resourceIds
+					if (event.resourceId) {
+						parsedEvent.resourceIds = [event.resourceId];
+					}
+					
 					log('parsing event')
 					log(parsedEvent)
 					return parsedEvent
