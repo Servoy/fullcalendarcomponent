@@ -53,6 +53,8 @@ angular.module('svyFullcalendar', ['servoy']).directive('svyFullcalendar', funct
 				var TIMEZONE_DEFAULT = "local"
 
 				var calendar = $element.find('.svy-fullcalendar');
+				
+				var firstShow = false;
 
 				var select;
 				var dayClick;
@@ -96,24 +98,21 @@ angular.module('svyFullcalendar', ['servoy']).directive('svyFullcalendar', funct
 					}
 				}
 
-				/* redraw the calendar to center it */
-				angular.element($window).bind("resize", onWindowResize);
-
-				// unbind the resize event at destroy
-				$scope.$on('$destroy', function() {
-						angular.element($window).unbind('resize', onWindowResize);
-					});
-
-				function onWindowResize() {
-					$scope.api.option("height", calendar.height());
-				}
-
 				/** init the fullcalendar. will destroy the calendar if existing already */
 				$scope.initFullCalendar = function() {
 					// TODO is this good ?
 					$scope.destroy();
 					var options = getOptions();
 					calendar.fullCalendar(options);
+					
+					// If the calendar is within a responsive form, it doesnt size properly it's height 
+					// call the render to fit the calendar height                  
+					if (!firstShow) {
+						firstShow = true;
+						$timeout(function ()  {
+							$scope.api.render();
+						});
+					}
 				}
 
 				/** destroy the fullcalendar */
@@ -185,7 +184,8 @@ angular.module('svyFullcalendar', ['servoy']).directive('svyFullcalendar', funct
 
 					/* config object */
 					var options = {
-						height: calendar.height(),
+						height: 'parent',//calendar.height(),
+						handleWindowResize: true,
 						select: select,
 						dayClick: dayClick,
 						eventClick: eventClick,
