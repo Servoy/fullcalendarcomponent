@@ -1,6 +1,7 @@
 {
 	"name": "svy-fullcalendar",
 	"displayName": "FullCalendar",
+	"categoryName": "Visualization",
 	"icon" : "fullcalendarcomponent/fullcalendar/fullcalendar.png",
 	"definition": "fullcalendarcomponent/fullcalendar/fullcalendar.js",
 	"serverscript": "fullcalendarcomponent/fullcalendar/fullcalendar_server.js",
