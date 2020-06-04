@@ -109,9 +109,14 @@ angular.module('svyFullcalendar', ['servoy']).directive('svyFullcalendar', funct
 					// call the render to fit the calendar height                  
 					if (!firstShow) {
 						firstShow = true;
-						$timeout(function ()  {
-							$scope.api.render();
-						});
+						
+						if (!options.scrollTime) {
+							$timeout(function ()  {
+								$scope.api.render();
+	 						});
+						} else {
+							console.log("call elements.calendar.render() in case the calendar height doesn't render as expected")
+						}
 					}
 				}
 
