@@ -146,6 +146,15 @@
 				 	"type": "ViewType",
 				 	"name": "view"
 				}]
+		},
+		"onViewRenderMethodID": {
+			"parameters" : [{
+					"type": "ViewType",
+				 	"name": "view"
+				 },{
+				 	"type": "JSEvent",
+				 	"name": "event"
+				 }]
 		}
 	},
 	"api": {
