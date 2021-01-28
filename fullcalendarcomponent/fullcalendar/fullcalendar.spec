@@ -35,6 +35,7 @@
 	"model":
 	{
 		"hasToDraw": {"type":"boolean", "pushToServer" : "allow", "tags": {"scope": "private"}},
+		"hasToDraw": {"type":"boolean", "pushToServer" : "shallow", "tags": {"scope": "private"}},
 		"renderOnCurrentView": {"type":"boolean", "pushToServer" : "allow", "tags": {"scope": "private"}},
 		"calendarOptions" : {"type":"FullCalendarOptions", "pushToServer" : "allow", "tags": {"scope": "private"}},
 		"view" : {"type" : "object", "pushToServer": "allow", "tags" : {"scope" : "private"}},

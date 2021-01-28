@@ -848,7 +848,7 @@ angular.module('svyFullcalendar', ['servoy']).directive('svyFullcalendar', funct
 							// reset hasToDraw option
 							$scope.$evalAsync(function() {
 								$scope.model.hasToDraw = false;
-								$scope.svyServoyapi.apply("hasToDraw");
+								//$scope.svyServoyapi.apply("hasToDraw");
 							});
 						}
 					});
