@@ -146,6 +146,20 @@ var evnts2 = {
 		end: scopes.svyDateUtils.toStartOfDay(scopes.svyDateUtils.addHours(new Date(), 13)),
 		allDay: false,
 		editable: true
+	},{
+		title: "background event 1",
+		start: scopes.svyDateUtils.addHours(scopes.svyDateUtils.toStartOfDay(new Date()), 9),
+		end: scopes.svyDateUtils.addHours(scopes.svyDateUtils.toStartOfDay(new Date()), 10),
+		allDay: false,
+		rendering: 'background',
+		textColor: 'black'
+	},{
+		title: "background event 2",
+		start: scopes.svyDateUtils.addHours(scopes.svyDateUtils.toStartOfDay(new Date()), 11),
+		end: scopes.svyDateUtils.addHours(scopes.svyDateUtils.toStartOfDay(new Date()), 12),
+		allDay: false,
+		rendering: 'background',
+		textColor: 'black'
 	}],
 	color: 'gray'
 };
@@ -169,6 +183,7 @@ function onLoad(event) {
 	// collect all eventSources
 	/** @type {Array<svy-fullcalendar.EventSourceType>} */
 	var eventSources = [];
+	var defaultDate = getDefaultDate();
 
 	// create an event source for any db resource
 	eventSources = eventSources.concat(getActiveEventSources());
@@ -213,7 +228,7 @@ function onLoad(event) {
 				day: 'dddd M/D'
 			},
 			dayNamesShort : dayNamesShort,
-			defaultDate : new Date(2016, 3, 27),
+			defaultDate : defaultDate,
 			defaultView: fullCalendar.CALENDAR_VIEW_TYPE.AGENDAWEEK,
 			editable: true,
 			eventSources : eventSources,
@@ -229,6 +244,10 @@ function onLoad(event) {
 			nowIndicator: true,
 			scrollTime: "8:00:00",
 			selectable: true,
+
+			// New custom property
+			showBgEventTitle: true,
+			
 			slotLabelFormat : "H(:mm)",
 //			selectConstraint: 'businessHours',
 			titleFormat: {
@@ -247,7 +266,7 @@ function onLoad(event) {
 	
 	// init the calendar in the left pane for date selection
 	elements.fullcalendarSelector.fullCalendar({
-		defaultDate : new Date(2016, 3, 27),
+		defaultDate : defaultDate,
 		firstDay: 1,
 		selectable: false,
 		editable: false,
@@ -690,6 +709,19 @@ function onDayClickMethodID(date, event, viewObject, resource) {
 	logEventHandler("DAY_CLICK",event,null,viewObject,resource)
 }
 
+/**
+ * @param {Date} date
+ * @param {JSEvent} event
+ * @param {CustomType<svy-fullcalendar.ViewType>} view
+ * @param {CustomType<svy-fullcalendar.ResourceType>} resource
+ *
+ * @protected
+ *
+ * @properties={typeid:24,uuid:"B90F6BDB-9EDE-4A39-A41B-25C6FC0ADA36"}
+ */
+function onDayRightClick(date, event, view, resource) {
+	logEventHandler("DAY_RIGHT_CLICK",event,null,view,null);
+}
 
 /**
  * fired at click on event
@@ -1183,4 +1215,20 @@ function updateMenuSelection(itemIndex, parentIndex, isSelected, parentText, men
  */
 function updateCalendarOption(option, value) {
 	calendar.updateFullCalendar(option, value);
+}
+
+/**
+ * @return {Date}
+ * 
+ * @properties={typeid:24,uuid:"A0F203F8-8745-4872-998F-EC606AF97F49"}
+ */
+function getDefaultDate() {
+	var q = datasources.db.fullcalendar.event_object.createSelect();
+	q.result.add(q.columns.start_date.min);
+	
+	var ds = databaseManager.getDataSetByQuery(q, 1);
+	/** @type {Date} */
+	var defaultDate = ds.getMaxRowIndex() ? ds.getValue(1, 1) : new Date();
+	
+	return defaultDate;
 }

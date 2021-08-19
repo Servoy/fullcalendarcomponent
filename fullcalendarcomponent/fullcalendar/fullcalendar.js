@@ -56,6 +56,7 @@ angular.module('svyFullcalendar', ['servoy']).directive('svyFullcalendar', funct
 
 				var select;
 				var dayClick;
+				var dayRightClick;
 				var eventClick;
 				var eventRightClick;
 				var eventDrop;
@@ -242,12 +243,61 @@ angular.module('svyFullcalendar', ['servoy']).directive('svyFullcalendar', funct
 					}
 				}
 
-				dayClick = function(date, jsEvent, view) {
+				dayClick = function(date, jsEvent, view, resource) {
 					if ($scope.handlers.onDayClickMethodID) {
-						$scope.handlers.onDayClickMethodID(parseMoment(date), jsEvent, stringifyView(view))
+						$scope.handlers.onDayClickMethodID(parseMoment(date), jsEvent, stringifyView(view), resource)
 					}
 				}
 
+				dayRightClick = function(jsEvent) {
+					if (!$scope.handlers.onDayRightClickMethodID) {
+						return;
+					}
+					
+					// Click was done on an event, this should be ignored and let the onEventRightClick event handle it
+					if ($(jsEvent.target).closest('.fc-event').length) {
+						return;
+					}
+					
+					jsEvent.preventDefault();
+
+					var view = calendar.fullCalendar('getView');
+					view.prepareHits();
+
+					var hit = view.queryHit(jsEvent.pageX, jsEvent.pageY);
+					if (!hit) {
+						console.log('No Hit found in day right click event at (x, y): (' + jsEvent.pageX + ',' + jsEvent.pageY + ')');
+						return;
+					}
+					
+					var cell;
+					
+					// fullCalendar >= 2.5.0
+					if (view.getHitSpan instanceof Function) {
+						cell = view.getHitSpan(hit);
+					}
+					// fullCalendar >= 3.5.0:
+					else if (hit.row && hit.row.getCellRange) {
+						cell = hit.row.getCellRange(hit.row, hit.col);
+					}
+					else {
+						var footprint = hit.component.getSafeHitFootprint(hit);
+						
+						if (footprint) {
+							cell = view.calendar.footprintToDateProfile(footprint);
+						}
+					}
+					
+					if (cell) {
+						var resource = cell.resourceId ? calendar.fullCalendar('getResourceById', cell.resourceId) : null;
+						
+						$scope.handlers.onDayRightClickMethodID(parseMoment(cell.start), jsEvent, $scope.model.view, resource);
+					}
+					else {
+						console.log('No Cell found in day right click event at (x, y): (' + jsEvent.pageX + ',' + jsEvent.pageY + ')');
+					}
+				}
+				
 				eventClick = function(event, jsEvent, view) {
 					if ($scope.handlers.onEventClickMethodID) {
 						$scope.handlers.onEventClickMethodID(stringifyEvent(event), jsEvent, stringifyView(view));
@@ -334,7 +384,25 @@ angular.module('svyFullcalendar', ['servoy']).directive('svyFullcalendar', funct
 					
 					// bind right click to event
 					if ($scope.handlers.onEventRightClickMethodID) {
-						element.bind('contextmenu', { event: event }, eventRightClick);
+						if (event.rendering == 'background' && $scope.model.calendarOptions.skipBgEventRightClick) {
+							if ($scope.handlers.onDayRightClickMethodID) {
+								element.bind('contextmenu', { event: event }, dayRightClick);
+							}
+						}
+						else {
+							element.bind('contextmenu', { event: event }, eventRightClick);
+						}
+					}
+					
+					// showBgEventsTitle is a custom option defined when calendar is initialized
+					// fc-bg-title is a custom css class just to differentiate from fc-title
+					if (event.rendering == 'background' && event.title && $scope.model.calendarOptions.showBgEventTitle) {
+						element.append('<div class="fc-bg-title"><span>' + event.title + '</span></div>');
+
+						// Text color seems to be ignored so it is added here
+						if (event.textColor) {
+							element.css('color', event.textColor);
+						}
 					}
 				}
 
@@ -355,6 +423,29 @@ angular.module('svyFullcalendar', ['servoy']).directive('svyFullcalendar', funct
 						// TODO should not be a mouse event but something else !!
 						var jsEvent = createMouseEvent();
 						$scope.handlers.onViewRenderMethodID(view, jsEvent);
+					}
+		               
+					if ($scope.handlers.onDayRightClickMethodID) {
+						var targetElements;
+
+						// Agenda View
+						if (element.hasClass('fc-agenda-view')) {
+							// Find all time cells excluding the ones that show the time, all-day section, non business hours section,
+							// it can include events but they will be filtered when dealing with the right click
+							targetElements = element.find('.fc-slats .fc-widget-content:not(.fc-time), .fc-day-grid .fc-bg .fc-day, .fc-day-grid .fc-content-skeleton, .fc-time-grid .fc-business-container');
+						}
+						// Month View
+						else if (element.hasClass('fc-month-view')) {
+							// Find all date rows, it can include events but they will be filtered when dealing with the right click
+							targetElements = element.find('.fc-day-grid .fc-row');
+						}
+						else {
+							// TODO Add support for other views (List, Basic, Timeline, Vertical Resource)
+						}
+
+						if (targetElements) {
+							targetElements.bind('contextmenu', { event: createMouseEvent(true) }, dayRightClick);
+						}
 					}
 				}
 
@@ -425,27 +516,30 @@ angular.module('svyFullcalendar', ['servoy']).directive('svyFullcalendar', funct
 				}
 
 				/** 
-				 * Create mouse event */
-				function createMouseEvent() {
+				 * Create mouse event
+				 * @param {Boolean} [isRightClick]
+				 */
+				function createMouseEvent(isRightClick) {
 					// get element offset
 					var element = calendar;
 					var offset = element.offset();
 					var x = offset.left;
 					var y = offset.top;
-					
-				    var ev = document.createEvent('MouseEvent');
-				    ev.initMouseEvent(
-				          'click',
-				          /*bubble*/true, /*cancelable*/true,
-				          window, null,
-				          x, y, x, y, /*coordinates*/
-				          false, false, false, false, /*modifier keys*/
-				          0/*button=left*/, null
-				      );
-					
+					var button = isRightClick ? 2/*button=right*/ : 0/*button=left*/
+
+					var ev = document.createEvent('MouseEvent');
+					ev.initMouseEvent(
+						'click',
+						/*bubble*/true, /*cancelable*/true,
+						window, null,
+						x, y, x, y, /*coordinates*/
+						false, false, false, false, /*modifier keys*/
+						button, null
+					);
+	               
 					//event.initMouseEvent("click", false, true, window, 1, x, y, x, y);
 					return ev;
-				}
+               }
 
 				/* internal API search for the given event in the calendar clientEvent */
 				function getClientEvent(event) {
