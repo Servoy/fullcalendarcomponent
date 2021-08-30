@@ -367,7 +367,7 @@ angular.module('svyFullcalendar', ['servoy']).directive('svyFullcalendar', funct
 					var date = calendar.fullCalendar('getDate');
 					$scope.model.view = view;
 					$scope.model.view.defaultDate = parseMoment(date);
-					$scope.svyServoyapi.apply("view");
+					// $scope.svyServoyapi.apply("view");
 
 					log("view rendered on:");
 					log(view);
