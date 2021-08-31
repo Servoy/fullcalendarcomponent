@@ -53,6 +53,8 @@ angular.module('svyFullcalendar', ['servoy']).directive('svyFullcalendar', funct
 				var TIMEZONE_DEFAULT = "local"
 
 				var calendar = $element.find('.svy-fullcalendar');
+				
+				var firstShow = false;
 
 				var select;
 				var dayClick;
@@ -96,24 +98,26 @@ angular.module('svyFullcalendar', ['servoy']).directive('svyFullcalendar', funct
 					}
 				}
 
-				/* redraw the calendar to center it */
-				angular.element($window).bind("resize", onWindowResize);
-
-				// unbind the resize event at destroy
-				$scope.$on('$destroy', function() {
-						angular.element($window).unbind('resize', onWindowResize);
-					});
-
-				function onWindowResize() {
-					$scope.api.option("height", calendar.height());
-				}
-
 				/** init the fullcalendar. will destroy the calendar if existing already */
 				$scope.initFullCalendar = function() {
 					// TODO is this good ?
 					$scope.destroy();
 					var options = getOptions();
 					calendar.fullCalendar(options);
+					
+					// If the calendar is within a responsive form, it doesnt size properly it's height 
+					// call the render to fit the calendar height                  
+					if (!firstShow) {
+						firstShow = true;
+						
+						if (!options.scrollTime) {
+							$timeout(function ()  {
+								$scope.api.render();
+	 						});
+						} else {
+							console.log("call elements.calendar.render() in case the calendar height doesn't render as expected")
+						}
+					}
 				}
 
 				/** destroy the fullcalendar */
@@ -185,7 +189,8 @@ angular.module('svyFullcalendar', ['servoy']).directive('svyFullcalendar', funct
 
 					/* config object */
 					var options = {
-						height: calendar.height(),
+						height: 'parent',//calendar.height(),
+						handleWindowResize: true,
 						select: select,
 						dayClick: dayClick,
 						eventClick: eventClick,
@@ -203,6 +208,23 @@ angular.module('svyFullcalendar', ['servoy']).directive('svyFullcalendar', funct
 							// slotDuration
 							options[property] = calendarOptions[property]
 						}
+					}
+					
+					// handle deprecated options
+					if (options.titleFormat) {
+						delete options.titleFormat;
+						log("Fullcalendar: options titleFormat has been deprecated. Set titleFormat in the specific views definition instead. See https://fullcalendar.io/docs/v3/view-specific-options", LOG_LEVEL.ERROR)
+					}
+					if (options.columnFormat) {
+						delete options.columnFormat;
+						log("Fullcalendar: options columnFormat has been deprecated. Use columnHeaderFormat in the specific views definition instead. See https://fullcalendar.io/docs/v3/view-specific-options", LOG_LEVEL.ERROR)
+					}
+					if (options.lang) {
+						if (!options.locale) {
+							options.locale = options.lang;
+						}
+						delete options.lang;
+						log("Fullcalendar: options lang has been deprecated; use locale instead", LOG_LEVEL.WARN)
 					}
 					
 					// If draw without calling constructor or renderOnCurrentView is set to true, use the persisteView to rerender
@@ -345,7 +367,7 @@ angular.module('svyFullcalendar', ['servoy']).directive('svyFullcalendar', funct
 					var date = calendar.fullCalendar('getDate');
 					$scope.model.view = view;
 					$scope.model.view.defaultDate = parseMoment(date);
-					$scope.svyServoyapi.apply("view");
+					// $scope.svyServoyapi.apply("view");
 
 					log("view rendered on:");
 					log(view);
@@ -655,6 +677,19 @@ angular.module('svyFullcalendar', ['servoy']).directive('svyFullcalendar', funct
 					var clientEvent = getClientEvent(event);
 					if (clientEvent) {
 						
+						// if event contains source id findSource by id and link it to the event
+						if (clientEvent.id && clientEvent.source && clientEvent.source.id != event.source) {
+							calendar.fullCalendar('removeEvents', clientEvent.id)
+							
+							// if event contains source id findSource by id and link it to the event
+							if (event.source && (typeof(event.source) === 'string' || typeof(event.source) === 'number')) {
+								var eventSource = getEventSourcesById(event.source);
+								event.source = eventSource;
+								calendar.fullCalendar('renderEvent', event)
+								return true;
+							}
+						} 
+						
 						var property;
 						
 						// remove old properties from the clientSide event
@@ -746,6 +781,10 @@ angular.module('svyFullcalendar', ['servoy']).directive('svyFullcalendar', funct
 				 *
 				 *  */
 				function getEventSourcesById(id) {
+					return calendar.fullCalendar('getEventSourceById', id );
+
+
+					
 					var index = getEventSourcesIndexById(id)
 					if (index >= 0) {
 						return $scope.eventSources[index];

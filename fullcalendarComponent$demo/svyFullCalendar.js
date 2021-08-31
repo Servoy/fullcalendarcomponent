@@ -13,5 +13,9 @@ var CALENDAR_VIEW_TYPE = {
 	TIMELINE_DAY: 'timelineDay',
 	TIMELINE_WEEK : 'timelineWeek',
 	TIMELINE_MONTH: 'timelineMonth',
-	TIMELINE_YEAR: 'timelineYear'
+	TIMELINE_YEAR: 'timelineYear',
+	LIST_DAY: 'listDay',
+	LIST_WEEK : 'listWeek',
+	LIST_MONTH: 'listMonth',
+	LIST_YEAR: 'listYear'
 }

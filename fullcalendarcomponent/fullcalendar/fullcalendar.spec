@@ -12,23 +12,23 @@
 			"mimetype":"text/javascript"
 		},{
 			"name": "fullcalendar.css",
-			"version": "2.9.1",
+			"version": "3.8.2",
 			"url": "fullcalendarcomponent/fullcalendar/lib/fullcalendar.min.css",
 			"mimetype": "text/css"
 		},{
 			"name": "fullcalendar.js",
-			"version": "2.9.1",
+			"version": "3.8.2",
 			"url": "fullcalendarcomponent/fullcalendar/lib/fullcalendar.min.js",
 			"mimetype": "text/javascript"
 		},{
 			"name": "gcal.js",
-			"version": "2.9.1",
+			"version": "3.8.2",
 			"url": "fullcalendarcomponent/fullcalendar/lib/gcal.js",
 			"mimetype": "text/javascript"
 		},{
 			"name": "fullcalendar.lang.js",
-			"version": "2.9.1",
-			"url": "fullcalendarcomponent/fullcalendar/lang/lang-all.js",
+			"version": "3.8.2",
+			"url": "fullcalendarcomponent/fullcalendar/lib/locale-all.js",
 			"mimetype": "text/javascript"
 		}],
 	"version": 1,
@@ -38,7 +38,7 @@
 		"hasToDraw": {"type":"boolean", "pushToServer" : "shallow", "tags": {"scope": "private"}},
 		"renderOnCurrentView": {"type":"boolean", "pushToServer" : "allow", "tags": {"scope": "private"}},
 		"calendarOptions" : {"type":"FullCalendarOptions", "pushToServer" : "allow", "tags": {"scope": "private"}},
-		"view" : {"type" : "object", "pushToServer": "allow", "tags" : {"scope" : "private"}},
+		"view" : {"type" : "object", "pushToServer": "deep", "tags" : {"scope" : "private"}},
 		"events": {"type": "EventType[]", "tags" : {"scope" : "private"}},
 		
 		"eventSources" : {"type": "ArrayEventSourceType[]", "tags" : {"scope" : "private"}},
@@ -147,6 +147,15 @@
 				 	"type": "ViewType",
 				 	"name": "view"
 				}]
+		},
+		"onViewRenderMethodID": {
+			"parameters" : [{
+					"type": "ViewType",
+				 	"name": "view"
+				 },{
+				 	"type": "JSEvent",
+				 	"name": "event"
+				 }]
 		}
 	},
 	"api": {
@@ -467,7 +476,6 @@
         	"aspectRatio": {"type" :"double"},
         	"businessHours": {"type" :"BusinessHours"},
         	"buttonText": {"type" :"object"},
-        	"columnFormat": {"type" :"object"},
         	"contentHeight": {"type" :"object"},
         	"defaultAllDayEventDuration": {"type" :"object"},
         	"defaultTimedEventDuration": {"type" :"string"},
@@ -496,7 +504,7 @@
         	"handleWindowResize": {"type" :"boolean"},       	
         	"header" : {"type" :"object"},
         	"hiddenDays" : {"type" : "int[]"},
-        	"lang": {"type" :"string"},
+        	"locale": {"type" :"string"},
         	"lazyFetching": {"type" :"boolean"},
         	"isRTL": {"type" :"boolean"},
         	"longPressDelay" : {"type" : "int"},
@@ -518,7 +526,6 @@
 			"slotEventOverlap": {"type" :"boolean"},
 			"snapDuration": {"type" :"string"},
 			"timeFormat": {"type" :"object"},
-			"titleFormat": {"type" :"object"},
 			"weekends": {"type" :"boolean"},
 			"weekNumbers": {"type" :"boolean"},
 			"weekNumberCalculation": {"type" :"string"},

@@ -65,11 +65,6 @@ function onLoad(event) {
 			end: '20:00:00',
 			dow: [1, 2, 3, 4, 5, 6]
 		},
-		columnFormat: {
-			month: 'ddd',
-			week: 'ddd M/d',
-			day: 'dddd M/d'
-		},
 		dayNamesShort: dayNamesShort,
 		defaultDate: new Date(2016, 4, 1),
 		defaultView: fullCalendar.CALENDAR_VIEW_TYPE.AGENDADAY,
@@ -120,12 +115,7 @@ function onLoad(event) {
 		defaultView: fullCalendar.CALENDAR_VIEW_TYPE.MONTH,
 		header: false,
 		contentHeight: 'auto',
-		aspectRatio: 2,
-		columnFormat: {
-			month: 'dd',
-			week: 'ddd M/d',
-			day: 'dddd M/d'
-		}
+		aspectRatio: 2
 	});
 }
 
