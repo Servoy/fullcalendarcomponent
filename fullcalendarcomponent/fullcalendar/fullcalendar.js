@@ -260,7 +260,7 @@ angular.module('svyFullcalendar', ['servoy']).directive('svyFullcalendar', funct
 						if (!jsEvent) {
 							jsEvent = createMouseEvent();
 						}
-						$scope.handlers.onSelectMethodID(parseMoment(start), parseMoment(end), jsEvent, stringifyView(view), resource);
+						$scope.handlers.onSelectMethodID(parseMoment(start), parseMoment(end), jsEvent, stringifyView(view), stringifyResource(resource));
 					}
 				}
 
@@ -444,6 +444,30 @@ angular.module('svyFullcalendar', ['servoy']).directive('svyFullcalendar', funct
 						intervalStart: parseMoment(view.intervalStart),
 						intervalEnd: parseMoment(view.intervalEnd)
 					}
+				}
+
+				function stringifyResource(resource) {
+					var parsedResource = { }
+					for (var property in resource) {
+						switch (property) {
+						case "parent":
+							// skip
+							break;
+						case "children":
+							// skip
+							//parsedResource.childrenId = [] // TODO parse the children Ids, Do i need that ?
+							break;
+						default:
+							// skip if is an internal property
+							if (property.indexOf("_") === 0) {
+								break;
+							}
+							parsedResource[property] = resource[property];
+							break;
+						}
+					}
+
+					return parsedResource;
 				}
 
 				/** 
