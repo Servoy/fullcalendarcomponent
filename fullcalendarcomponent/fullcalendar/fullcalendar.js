@@ -267,30 +267,9 @@ angular.module('svyFullcalendar', ['servoy']).directive('svyFullcalendar', funct
 				dayClick = function(date, jsEvent, view, resourceObj) {
 					if ($scope.handlers.onDayClickMethodID) {
 						if(resourceObj){
-							var parsedResourceObj = {}
-							for (var property in resourceObj) {
-								switch (property) {
-								case "parent":
-									// skip
-									break;
-								case "children":
-									// skip
-									//parsedResource.childrenId = [] // TODO parse the children Ids, Do i need that ?
-									break;
-								default:
-									// skip if is an internal property
-									if (property.indexOf("_") === 0) {
-										break;
-									}
-									parsedResourceObj[property] = resourceObj[property];
-									break;
-								}
-							}
-
-							$scope.handlers.onDayClickMethodID(parseMoment(date), jsEvent, stringifyView(view), parsedResourceObj)
-						}
-						else{
-							$scope.handlers.onDayClickMethodID(parseMoment(date), jsEvent, stringifyView(view))
+							$scope.handlers.onDayClickMethodID(parseMoment(date), jsEvent, stringifyView(view), stringifyResource(resourceObj));
+						} else{
+							$scope.handlers.onDayClickMethodID(parseMoment(date), jsEvent, stringifyView(view));
 						}
 
 					}
