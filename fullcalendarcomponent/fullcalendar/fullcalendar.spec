@@ -158,6 +158,20 @@
 				 }]
 		}
 	},
+	"internalApi": {
+	       "removeEventSource": {
+                "parameters":[{
+                    "name":"id",
+                    "type":"object"
+                }]
+            },
+            "removeResource": {
+                "parameters":[{
+                    "name":"id",
+                    "type":"object"
+            }],
+        }
+	},
 	"api": {
 		"fullCalendar" : {
 			"parameters" : [{
