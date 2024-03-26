@@ -7,7 +7,7 @@
 	"serverscript": "fullcalendarcomponent/fullcalendar/fullcalendar_server.js",
 	"libraries": [{ 
 			"name":"moment", 
-			"version":"2.29.3", 
+			"version":"2.30.1", 
 			"url": "fullcalendarcomponent/fullcalendar/lib/moment-with-locales.min.js", 
 			"mimetype":"text/javascript"
 		},{
